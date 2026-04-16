@@ -28,7 +28,7 @@ Build one current AsyncAPI definition:
 CREATE SUMMARY HTML
 -------------------
 
-  npm run summary:apis
+  npm run summary
 
 VERSIONED SCHEMA PUBLICATION
 ----------------------------
