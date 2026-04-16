@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-eetsProviderId
 title: eetsProviderId
 description: Identifier of the EETS provider associated with the on-board unit.
 type: object

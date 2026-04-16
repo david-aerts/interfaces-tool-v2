@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-enforcementBoolean
 title: enforcementBoolean
 description: Boolean representing the decision to enforce or not
 type: boolean

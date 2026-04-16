@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-enforcementRecord-qualification
 title: qualification
 description: Enforcement qualification outcome for the detected vehicle.
 type: object

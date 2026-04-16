@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-fileName
 title: fileName
 description: The file name, used to match the form-data bytes
 type: string

@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-breachPaginated-breachPaginated
 title: breachPaginated
 description: List of breaches, paginated as per request
 type: object

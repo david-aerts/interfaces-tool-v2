@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-filterRequest-page
 title: page
 description: Requested page
 type: integer

@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-vehicleCharacteristics
 title: vehicleCharacteristics
 description: Vehicle characteristics
 type: object

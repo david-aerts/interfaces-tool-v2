@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-amount
 title: amount
 description: '[AI-written] Monetary amount with value and scale.'
 type: object

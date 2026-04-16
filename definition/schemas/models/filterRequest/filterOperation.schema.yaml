@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-filterRequest-filterOperation
 title: filterOperation
 description: A single filter operation to apply to a field.
 type: object

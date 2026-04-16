@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-enforcementRecord-controlLocation
 title: controlLocation
 description: Physical location details of the control location.
 type: object

@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-obuRightLpn
 title: obuRightLpn
 description: OBU right LPN attribute
 type: boolean

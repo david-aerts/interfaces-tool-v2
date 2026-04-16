@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-enforcementRecord-vehicleClass
 title: vehicleClass
 description: Vehicle Class as fully qualified by Enforcement, which should be used further to qualify vehicle
 type: string

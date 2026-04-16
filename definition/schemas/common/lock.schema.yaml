@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-lock
 title: lock
 description: Lock metadata used to control concurrent access to the object.
 type: object

@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-absoluteReference
 title: absoluteReference
 description: Absolute location details of the file in the file gateway.
 type: object

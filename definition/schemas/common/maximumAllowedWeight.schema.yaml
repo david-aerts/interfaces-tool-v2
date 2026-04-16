@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-maximumAllowedWeight
 title: maximumAllowedWeight
 description: Maximum allowed weigth
 type: integer

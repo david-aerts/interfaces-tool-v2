@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-filterRequest-filterOperations
 title: filterOperations
 description: Map of field names to filter operations. Different fields are ANDed operations within a field are ANDed.
 type: array

@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-sanction-statuses
 title: statuses
 description: Sanction main and specific statuses.
 type: object

@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: common-pan
 title: pan
 description: Personal account number on the OBU
 type: string

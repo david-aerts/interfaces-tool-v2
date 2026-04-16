@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-sanction-breachGroupKey
 title: breachGroupKey
 description: Single breach JSON key used for grouping
 type: string

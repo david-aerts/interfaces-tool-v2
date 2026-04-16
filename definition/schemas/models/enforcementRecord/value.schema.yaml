@@ -1,5 +1,4 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: models-enforcementRecord-value
 title: value
 description: Enforcement Record main status
 type: string
