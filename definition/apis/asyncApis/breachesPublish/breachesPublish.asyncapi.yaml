@@ -23,7 +23,7 @@ channels:
           $ref: ../../../../published-current/schemas/breach/breach.schema.yaml
 
 operations:
-  publishEnforcementRecord:
+  publishBreaches:
     action: send
     channel:
       $ref: '#/channels/breaches'

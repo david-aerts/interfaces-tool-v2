@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: consequenceFiscalPaymentId
-description: Fiscal consequence payment identifier on the Payment Module (AAX).
-type: integer
-format: int64
-examples:
-- 987654321

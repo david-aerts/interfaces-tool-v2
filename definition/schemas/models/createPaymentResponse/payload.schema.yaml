@@ -1,16 +1,13 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: consequenceFiscalPaymentData
-description: Fiscal consequence Payment data.
+title: payload
+description: The business payload
 type: object
 additionalProperties: false
 required:
-- id
-- reference
-- term
+- paymentId
+- paymentReference
 properties:
-  id:
+  paymentId:
     $ref: ../../common/paymentId.schema.yaml
-  reference:
+  paymentReference:
     $ref: ../../common/paymentReference.schema.yaml
-  term:
-    $ref: ./consequenceFiscalPaymentTerm.schema.yaml

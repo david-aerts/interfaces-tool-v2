@@ -1,0 +1,15 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: amountWithCurrency
+description: 'Monetary amount with currency, value and scale.'
+type: object
+additionalProperties: false
+required:
+- value
+- scale
+properties:
+  value:
+    $ref: ./amountValue.schema.yaml
+  scale:
+    $ref: ./amountScale.schema.yaml
+  currency:
+    $ref: ./currency.schema.yaml

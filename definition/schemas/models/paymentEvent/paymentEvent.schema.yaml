@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: paymentEvent
+description: Request to update sanctioning about a payment event
+type: object
+additionalProperties: false
+required:
+- meta
+- payload
+properties:
+  meta:
+    $ref: ../../common/meta.schema.yaml
+  payload:
+    $ref: ./payload.schema.yaml

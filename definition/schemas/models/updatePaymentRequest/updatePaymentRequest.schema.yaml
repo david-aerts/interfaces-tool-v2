@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: updatePaymentReqeuest
+description: Request to update a bill on the Payment Module
+type: object
+additionalProperties: false
+required:
+- meta
+- payload
+properties:
+  meta:
+    $ref: ../../common/meta.schema.yaml
+  payload:
+    $ref: ./payload.schema.yaml

@@ -1,0 +1,19 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: payload
+description: The business payload
+type: object
+additionalProperties: false
+required:
+- source
+- type
+- externalRef
+- amountDue
+properties:
+  source:
+    $ref: ../../common/paymentSource.schema.yaml
+  type:
+    $ref: ../../common/paymentType.schema.yaml
+  externalRef:
+    $ref: ../../common/paymentExternalReference.schema.yaml
+  amountDue:
+    $ref: ../../common/amountWithCurrency.schema.yaml
