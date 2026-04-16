@@ -1,6 +1,6 @@
 asyncapi: 3.1.0
 info:
-  title: enforcementRecordsToReporting
+  title: Publish enforcement records
   version: X.Y.Z
   description: Kafka topic for publishing enforcement records to Reporting Module
 

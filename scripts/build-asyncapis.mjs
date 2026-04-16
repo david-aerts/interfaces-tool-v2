@@ -1,3 +1,5 @@
+// scripts/build-asyncapis.mjs
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import { execFile } from "node:child_process";
@@ -35,7 +37,9 @@ async function ensureDirectory(directoryPath) {
 }
 
 async function getDirectSubdirectoryNames(directoryPath) {
-  const entries = await fs.readdir(directoryPath, { withFileTypes: true });
+  const entries = await fs.readdir(directoryPath, {
+    withFileTypes: true,
+  });
 
   return entries
     .filter((entry) => entry.isDirectory())
@@ -50,9 +54,37 @@ async function bundleAsyncApi(rootFilePath, outputFilePath) {
       "bundle",
       rootFilePath,
       "--output",
-      outputFilePath
+      outputFilePath,
     ],
-    { cwd: PROJECT_ROOT }
+    {
+      cwd: PROJECT_ROOT,
+    }
+  );
+}
+
+async function generateAsyncApiHtml(
+  inputFilePath,
+  outputDirectoryPath,
+  outputFileName
+) {
+  await execFileAsync(
+    process.platform === "win32" ? "npx.cmd" : "npx",
+    [
+      "@asyncapi/cli",
+      "generate",
+      "fromTemplate",
+      inputFilePath,
+      "@asyncapi/html-template",
+      "-o",
+      outputDirectoryPath,
+      "-p",
+      "singleFile=true",
+      "-p",
+      `outFilename=${outputFileName}`,
+    ],
+    {
+      cwd: PROJECT_ROOT,
+    }
   );
 }
 
@@ -64,25 +96,44 @@ async function buildOneAsyncApi(apiName) {
   );
 
   if (!(await pathExists(rootFilePath))) {
-    console.warn(`Skipping "${apiName}": missing root file ${rootFilePath}`);
+    console.warn(
+      `Skipping "${apiName}": missing root file ${rootFilePath}`
+    );
     return;
   }
 
   const outputDir = path.join(PUBLICATION_ASYNCAPIS_DIR, apiName);
+
   await ensureDirectory(outputDir);
 
-  const outputFilePath = path.join(outputDir, `${apiName}.asyncapi.yaml`);
+  const bundledFilePath = path.join(
+    outputDir,
+    `${apiName}.asyncapi.yaml`
+  );
 
-  console.log(`Bundling "${apiName}" from ${rootFilePath}`);
+  const htmlFileName = `${apiName}.asyncapi.html`;
 
-  await bundleAsyncApi(rootFilePath, outputFilePath);
+  console.log(`Bundling AsyncAPI "${apiName}"`);
+  await bundleAsyncApi(rootFilePath, bundledFilePath);
 
-  console.log(`Done "${apiName}" -> ${outputFilePath}`);
+  console.log(`Generating AsyncAPI HTML "${apiName}"`);
+  await generateAsyncApiHtml(
+    bundledFilePath,
+    outputDir,
+    htmlFileName
+  );
+
+  console.log(`Created: ${bundledFilePath}`);
+  console.log(
+    `Created: ${path.join(outputDir, htmlFileName)}`
+  );
 }
 
 async function main() {
   if (!(await pathExists(ASYNCAPIS_DIR))) {
-    throw new Error(`AsyncAPI directory not found: ${ASYNCAPIS_DIR}`);
+    throw new Error(
+      `AsyncAPI directory not found: ${ASYNCAPIS_DIR}`
+    );
   }
 
   await ensureDirectory(PUBLICATION_ASYNCAPIS_DIR);
@@ -98,7 +149,7 @@ async function main() {
     try {
       await buildOneAsyncApi(apiName);
     } catch (error) {
-      console.error(`Failed for "${apiName}"`);
+      console.error(`Failed AsyncAPI "${apiName}"`);
       console.error(error.stderr || error.message);
       process.exitCode = 1;
     }

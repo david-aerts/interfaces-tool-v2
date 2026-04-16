@@ -1,4 +1,5 @@
 // scripts/build-openapis.mjs
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import { execFile } from "node:child_process";
@@ -36,7 +37,9 @@ async function ensureDirectory(directoryPath) {
 }
 
 async function getDirectSubdirectoryNames(directoryPath) {
-  const entries = await fs.readdir(directoryPath, { withFileTypes: true });
+  const entries = await fs.readdir(directoryPath, {
+    withFileTypes: true,
+  });
 
   return entries
     .filter((entry) => entry.isDirectory())
@@ -51,9 +54,27 @@ async function bundleOpenApi(rootFilePath, outputFilePath) {
       "bundle",
       rootFilePath,
       "--output",
-      outputFilePath
+      outputFilePath,
     ],
-    { cwd: PROJECT_ROOT }
+    {
+      cwd: PROJECT_ROOT,
+    }
+  );
+}
+
+async function generateOpenApiHtml(inputFilePath, outputFilePath) {
+  await execFileAsync(
+    process.platform === "win32" ? "npx.cmd" : "npx",
+    [
+      "@redocly/cli",
+      "build-docs",
+      inputFilePath,
+      "--output",
+      outputFilePath,
+    ],
+    {
+      cwd: PROJECT_ROOT,
+    }
   );
 }
 
@@ -65,25 +86,41 @@ async function buildOneOpenApi(apiName) {
   );
 
   if (!(await pathExists(rootFilePath))) {
-    console.warn(`Skipping "${apiName}": missing root file ${rootFilePath}`);
+    console.warn(
+      `Skipping "${apiName}": missing root file ${rootFilePath}`
+    );
     return;
   }
 
   const outputDir = path.join(PUBLICATION_OPENAPIS_DIR, apiName);
+
   await ensureDirectory(outputDir);
 
-  const outputFilePath = path.join(outputDir, `${apiName}.openapi.yaml`);
+  const bundledFilePath = path.join(
+    outputDir,
+    `${apiName}.openapi.yaml`
+  );
 
-  console.log(`Bundling "${apiName}" from ${rootFilePath}`);
+  const htmlFilePath = path.join(
+    outputDir,
+    `${apiName}.openapi.html`
+  );
 
-  await bundleOpenApi(rootFilePath, outputFilePath);
+  console.log(`Bundling OpenAPI "${apiName}"`);
+  await bundleOpenApi(rootFilePath, bundledFilePath);
 
-  console.log(`Done "${apiName}" -> ${outputFilePath}`);
+  console.log(`Generating OpenAPI HTML "${apiName}"`);
+  await generateOpenApiHtml(bundledFilePath, htmlFilePath);
+
+  console.log(`Created: ${bundledFilePath}`);
+  console.log(`Created: ${htmlFilePath}`);
 }
 
 async function main() {
   if (!(await pathExists(OPENAPIS_DIR))) {
-    throw new Error(`OpenAPI directory not found: ${OPENAPIS_DIR}`);
+    throw new Error(
+      `OpenAPI directory not found: ${OPENAPIS_DIR}`
+    );
   }
 
   await ensureDirectory(PUBLICATION_OPENAPIS_DIR);
@@ -99,7 +136,7 @@ async function main() {
     try {
       await buildOneOpenApi(apiName);
     } catch (error) {
-      console.error(`Failed for "${apiName}"`);
+      console.error(`Failed OpenAPI "${apiName}"`);
       console.error(error.stderr || error.message);
       process.exitCode = 1;
     }
