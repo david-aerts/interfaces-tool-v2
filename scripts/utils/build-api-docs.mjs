@@ -1,5 +1,3 @@
-// scripts/utils/build-api-docs.mjs
-
 import path from "node:path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
@@ -30,8 +28,6 @@ async function runNpx(commandArguments) {
 
 /**
  * Generic API build pipeline reused for both OpenAPI and AsyncAPI.
- *
- * When requestedApiName is provided, only that API is built.
  *
  * @param {object} configuration
  * @param {string} configuration.kind
@@ -95,7 +91,6 @@ export async function buildApis(configuration) {
 
     try {
       const apiOutputDirectory = path.join(outputDirectory, apiName);
-
       await ensureDirectory(apiOutputDirectory);
 
       const bundledFilePath = path.join(
@@ -140,7 +135,7 @@ export async function bundleOpenApi(rootFilePath, outputFilePath) {
 }
 
 /**
- * Generates standalone HTML documentation for an OpenAPI file.
+ * Generates standalone OpenAPI HTML with the default dev naming convention.
  *
  * @param {string} bundledFilePath
  * @param {string} outputDirectory
@@ -152,12 +147,29 @@ export async function generateOpenApiHtml(
   outputDirectory,
   apiName
 ) {
+  await generateOpenApiHtmlToFile(
+    bundledFilePath,
+    path.join(outputDirectory, `${apiName}.openapi.html`)
+  );
+}
+
+/**
+ * Generates standalone OpenAPI HTML to a specific file.
+ *
+ * @param {string} bundledFilePath
+ * @param {string} outputFilePath
+ * @returns {Promise<void>}
+ */
+export async function generateOpenApiHtmlToFile(
+  bundledFilePath,
+  outputFilePath
+) {
   await runNpx([
     "@redocly/cli",
     "build-docs",
     bundledFilePath,
     "--output",
-    path.join(outputDirectory, `${apiName}.openapi.html`),
+    outputFilePath,
   ]);
 }
 
@@ -179,7 +191,7 @@ export async function bundleAsyncApi(rootFilePath, outputFilePath) {
 }
 
 /**
- * Generates standalone HTML documentation for an AsyncAPI file.
+ * Generates standalone AsyncAPI HTML with the default dev naming convention.
  *
  * @param {string} bundledFilePath
  * @param {string} outputDirectory
@@ -190,6 +202,26 @@ export async function generateAsyncApiHtml(
   bundledFilePath,
   outputDirectory,
   apiName
+) {
+  await generateAsyncApiHtmlToFile(
+    bundledFilePath,
+    outputDirectory,
+    `${apiName}.asyncapi.html`
+  );
+}
+
+/**
+ * Generates standalone AsyncAPI HTML to a specific file name.
+ *
+ * @param {string} bundledFilePath
+ * @param {string} outputDirectory
+ * @param {string} outputFileName
+ * @returns {Promise<void>}
+ */
+export async function generateAsyncApiHtmlToFile(
+  bundledFilePath,
+  outputDirectory,
+  outputFileName
 ) {
   await runNpx([
     "@asyncapi/cli",
@@ -203,6 +235,6 @@ export async function generateAsyncApiHtml(
     "-p",
     "singleFile=true",
     "-p",
-    `outFilename=${apiName}.asyncapi.html`,
+    `outFilename=${outputFileName}`,
   ]);
 }

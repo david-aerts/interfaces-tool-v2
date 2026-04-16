@@ -1,5 +1,3 @@
-// scripts/help.mjs
-
 console.log(`
 interfaces-tool-v2 commands
 
@@ -34,14 +32,14 @@ VERSIONED SCHEMA PUBLICATION
 Publish all schemas using the default MINOR bump:
   npm run publish:schemas
 
+Publish one schema using the default MINOR bump:
+  npm run publish:schemas -- breach
+
 Publish all schemas with a PATCH bump:
   npm run publish:schemas -- patch
 
 Publish all schemas with a MAJOR bump:
   npm run publish:schemas -- major
-
-Publish one schema using the default MINOR bump:
-  npm run publish:schemas -- breach
 
 Publish one schema with a PATCH bump:
   npm run publish:schemas -- breach patch
@@ -53,12 +51,40 @@ Publish one schema with a MAJOR bump:
   npm run publish:schemas -- breach major
 
 
+VERSIONED API PUBLICATION
+-------------------------
+
+Publish all OpenAPI definitions using the default MINOR bump:
+  npm run publish:openapis
+
+Publish one OpenAPI definition using the default MINOR bump:
+  npm run publish:openapis -- sanctioningMain
+
+Publish all OpenAPI definitions with a PATCH bump:
+  npm run publish:openapis -- patch
+
+Publish one OpenAPI definition with a MAJOR bump:
+  npm run publish:openapis -- sanctioningMain major
+
+Publish all AsyncAPI definitions using the default MINOR bump:
+  npm run publish:asyncapis
+
+Publish one AsyncAPI definition using the default MINOR bump:
+  npm run publish:asyncapis -- enforcementRecordsPublish
+
+Publish all AsyncAPI definitions with a PATCH bump:
+  npm run publish:asyncapis -- patch
+
+Publish one AsyncAPI definition with a MAJOR bump:
+  npm run publish:asyncapis -- enforcementRecordsPublish major
+
+
 OUTPUT FOLDERS
 --------------
 
-Current development output:
+Latest published non-versioned artifacts:
   published-current/
 
-Versioned published output:
+Published versioned schemas and APIs:
   published-version/
 `);

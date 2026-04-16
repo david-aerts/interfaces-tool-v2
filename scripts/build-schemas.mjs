@@ -1,5 +1,3 @@
-// scripts/build-schemas.mjs
-
 import fs from "node:fs/promises";
 import path from "node:path";
 import $RefParser from "@apidevtools/json-schema-ref-parser";
@@ -33,7 +31,7 @@ async function bundleSchema(rootSchemaPath) {
  * @returns {Promise<void>}
  */
 async function writeSchemaOutputs(schemaObject, modelName) {
-  const outputDir = path.join(PATHS.currentSchemas, modelName);
+  const outputDir = path.join(PATHS.publishedCurrentSchemas, modelName);
   await ensureDirectory(outputDir);
 
   const jsonOutputPath = path.join(outputDir, `${modelName}.schema.json`);
@@ -74,7 +72,7 @@ async function buildOneModel(modelName) {
   const bundledSchema = await bundleSchema(rootSchemaPath);
   await writeSchemaOutputs(bundledSchema, modelName);
 
-  console.log(`Created: ${path.join(PATHS.currentSchemas, modelName)}`);
+  console.log(`Created: ${path.join(PATHS.publishedCurrentSchemas, modelName)}`);
 }
 
 /**
@@ -95,7 +93,7 @@ async function main() {
     );
   }
 
-  await ensureDirectory(PATHS.currentSchemas);
+  await ensureDirectory(PATHS.publishedCurrentSchemas);
 
   const allModelNames = await getDirectSubdirectoryNames(
     PATHS.definitionSchemasModels

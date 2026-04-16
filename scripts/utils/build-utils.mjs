@@ -1,5 +1,3 @@
-// scripts/utils/build-utils.mjs
-
 import fs from "node:fs/promises";
 
 /**

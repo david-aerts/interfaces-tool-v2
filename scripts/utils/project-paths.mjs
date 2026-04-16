@@ -1,5 +1,3 @@
-// scripts/utils/project-paths.mjs
-
 import path from "node:path";
 
 const PROJECT_ROOT = process.cwd();
@@ -7,8 +5,9 @@ const PROJECT_ROOT = process.cwd();
 /**
  * Centralized project paths.
  *
- * - "current" is used for the dev build flow
- * - "publish-version" is used for versioned publication
+ * Notes:
+ * - "published-current" contains the latest non-versioned published artifacts
+ * - "published-version" contains immutable versioned published artifacts
  */
 export const PATHS = {
   projectRoot: PROJECT_ROOT,
@@ -34,29 +33,43 @@ export const PATHS = {
     "asyncApis"
   ),
 
-  currentSchemas: path.join(
+  publishedCurrentSchemas: path.join(
     PROJECT_ROOT,
     "published-current",
     "schemas"
   ),
 
-  currentOpenApis: path.join(
+  publishedCurrentOpenApis: path.join(
     PROJECT_ROOT,
     "published-current",
     "apis",
     "openApis"
   ),
 
-  currentAsyncApis: path.join(
+  publishedCurrentAsyncApis: path.join(
     PROJECT_ROOT,
     "published-current",
     "apis",
     "asyncApis"
   ),
 
-  publishVersionSchemas: path.join(
+  publishedVersionSchemas: path.join(
     PROJECT_ROOT,
     "published-version",
     "schemas"
+  ),
+
+  publishedVersionOpenApis: path.join(
+    PROJECT_ROOT,
+    "published-version",
+    "apis",
+    "openApis"
+  ),
+
+  publishedVersionAsyncApis: path.join(
+    PROJECT_ROOT,
+    "published-version",
+    "apis",
+    "asyncApis"
   ),
 };

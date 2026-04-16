@@ -1,5 +1,3 @@
-// scripts/publish-schemas.mjs
-
 import fs from "node:fs/promises";
 import path from "node:path";
 import $RefParser from "@apidevtools/json-schema-ref-parser";
@@ -12,11 +10,11 @@ import {
 } from "./utils/build-utils.mjs";
 
 import { PATHS } from "./utils/project-paths.mjs";
-
-/**
- * Supported semantic version bump types.
- */
-const VALID_BUMP_TYPES = new Set(["major", "minor", "patch"]);
+import {
+  compareVersions,
+  getNextVersion,
+  parsePublishArguments,
+} from "./utils/publish-version-utils.mjs";
 
 /**
  * Collects publication results for the final summary table.
@@ -35,52 +33,6 @@ const VALID_BUMP_TYPES = new Set(["major", "minor", "patch"]);
  * }>}
  */
 const publicationResults = [];
-
-/**
- * Parses CLI arguments.
- *
- * Supported forms:
- * - npm run publish:schemas
- * - npm run publish:schemas -- breach
- * - npm run publish:schemas -- major
- * - npm run publish:schemas -- breach major
- *
- * Rules:
- * - default bump type is "minor"
- * - if one non-bump argument is present, it is treated as the schema model name
- *
- * @returns {{
- *   modelName: string | null,
- *   bumpType: "major" | "minor" | "patch"
- * }}
- */
-function parseArguments() {
-  const args = process.argv.slice(2);
-
-  let modelName = null;
-  let bumpType = "minor";
-
-  for (const arg of args) {
-    if (VALID_BUMP_TYPES.has(arg)) {
-      bumpType = arg;
-      continue;
-    }
-
-    if (!modelName) {
-      modelName = arg;
-      continue;
-    }
-
-    throw new Error(
-      `Unexpected argument "${arg}". Expected one schema name and optionally one bump type: major, minor, or patch.`
-    );
-  }
-
-  return {
-    modelName,
-    bumpType,
-  };
-}
 
 /**
  * Returns the root schema file path for a schema model.
@@ -103,7 +55,7 @@ function getRootSchemaPath(modelName) {
  * @returns {string}
  */
 function getModelPublicationDirectory(modelName) {
-  return path.join(PATHS.publishVersionSchemas, modelName);
+  return path.join(PATHS.publishedVersionSchemas, modelName);
 }
 
 /**
@@ -142,155 +94,6 @@ function getVersionedJsonOutputPath(modelName, version) {
  */
 async function bundleSchema(rootSchemaPath) {
   return $RefParser.bundle(rootSchemaPath);
-}
-
-/**
- * Parses a semantic version string.
- *
- * Example:
- * - 1.2.3 -> { major: 1, minor: 2, patch: 3 }
- *
- * @param {string} version
- * @returns {{ major: number, minor: number, patch: number }}
- */
-function parseVersion(version) {
-  const match = version.match(/^(\d+)\.(\d+)\.(\d+)$/);
-
-  if (!match) {
-    throw new Error(`Invalid version "${version}". Expected X.Y.Z`);
-  }
-
-  return {
-    major: Number(match[1]),
-    minor: Number(match[2]),
-    patch: Number(match[3]),
-  };
-}
-
-/**
- * Formats a semantic version object.
- *
- * @param {{ major: number, minor: number, patch: number }} version
- * @returns {string}
- */
-function formatVersion(version) {
-  return `${version.major}.${version.minor}.${version.patch}`;
-}
-
-/**
- * Returns the next semantic version based on the requested bump type.
- *
- * @param {string} previousVersion
- * @param {"major" | "minor" | "patch"} bumpType
- * @returns {string}
- */
-function bumpVersion(previousVersion, bumpType) {
-  const version = parseVersion(previousVersion);
-
-  if (bumpType === "major") {
-    version.major += 1;
-    version.minor = 0;
-    version.patch = 0;
-  } else if (bumpType === "minor") {
-    version.minor += 1;
-    version.patch = 0;
-  } else {
-    version.patch += 1;
-  }
-
-  return formatVersion(version);
-}
-
-/**
- * Compares two semantic versions.
- *
- * @param {string} left
- * @param {string} right
- * @returns {number}
- */
-function compareVersions(left, right) {
-  const a = parseVersion(left);
-  const b = parseVersion(right);
-
-  if (a.major !== b.major) {
-    return a.major - b.major;
-  }
-
-  if (a.minor !== b.minor) {
-    return a.minor - b.minor;
-  }
-
-  return a.patch - b.patch;
-}
-
-/**
- * Returns all published versions for one model.
- *
- * Expected file format:
- * <modelName>_vX.Y.Z.schema.yaml
- *
- * @param {string} modelName
- * @returns {Promise<string[]>}
- */
-async function getPublishedVersions(modelName) {
-  const publicationDirectory = getModelPublicationDirectory(modelName);
-
-  if (!(await pathExists(publicationDirectory))) {
-    return [];
-  }
-
-  const entries = await fs.readdir(publicationDirectory, {
-    withFileTypes: true,
-  });
-
-  const versions = entries
-    .filter((entry) => entry.isFile())
-    .map((entry) => entry.name)
-    .map((fileName) => {
-      const match = fileName.match(
-        new RegExp(`^${modelName}_v(\\d+\\.\\d+\\.\\d+)\\.schema\\.yaml$`)
-      );
-
-      return match ? match[1] : null;
-    })
-    .filter(Boolean);
-
-  return [...new Set(versions)].sort(compareVersions);
-}
-
-/**
- * Returns the latest published version for a model, or null when none exists.
- *
- * @param {string} modelName
- * @returns {Promise<string | null>}
- */
-async function getLatestPublishedVersion(modelName) {
-  const versions = await getPublishedVersions(modelName);
-
-  if (versions.length === 0) {
-    return null;
-  }
-
-  return versions[versions.length - 1];
-}
-
-/**
- * Computes the next version to publish.
- *
- * Rules:
- * - no existing version => 1.0.0
- * - otherwise apply the requested bump type
- *
- * @param {string | null} latestVersion
- * @param {"major" | "minor" | "patch"} bumpType
- * @returns {string}
- */
-function getNextVersion(latestVersion, bumpType) {
-  if (!latestVersion) {
-    return "1.0.0";
-  }
-
-  return bumpVersion(latestVersion, bumpType);
 }
 
 /**
@@ -364,6 +167,57 @@ function addVersionToRootTitle(schemaObject, modelName, version) {
   clonedSchema.title = `${baseTitle} v${version}`;
 
   return clonedSchema;
+}
+
+/**
+ * Returns all published versions for one model.
+ *
+ * Expected file format:
+ * <modelName>_vX.Y.Z.schema.yaml
+ *
+ * @param {string} modelName
+ * @returns {Promise<string[]>}
+ */
+async function getPublishedVersions(modelName) {
+  const publicationDirectory = getModelPublicationDirectory(modelName);
+
+  if (!(await pathExists(publicationDirectory))) {
+    return [];
+  }
+
+  const entries = await fs.readdir(publicationDirectory, {
+    withFileTypes: true,
+  });
+
+  const versions = entries
+    .filter((entry) => entry.isFile())
+    .map((entry) => entry.name)
+    .map((fileName) => {
+      const match = fileName.match(
+        new RegExp(`^${modelName}_v(\\d+\\.\\d+\\.\\d+)\\.schema\\.yaml$`)
+      );
+
+      return match ? match[1] : null;
+    })
+    .filter(Boolean);
+
+  return [...new Set(versions)].sort(compareVersions);
+}
+
+/**
+ * Returns the latest published version for a model, or null when none exists.
+ *
+ * @param {string} modelName
+ * @returns {Promise<string | null>}
+ */
+async function getLatestPublishedVersion(modelName) {
+  const versions = await getPublishedVersions(modelName);
+
+  if (versions.length === 0) {
+    return null;
+  }
+
+  return versions[versions.length - 1];
 }
 
 /**
@@ -463,7 +317,7 @@ async function publishOneModel(modelName, bumpType) {
  * @returns {Promise<void>}
  */
 async function main() {
-  const { modelName: requestedModelName, bumpType } = parseArguments();
+  const { artifactName: requestedModelName, bumpType } = parsePublishArguments();
 
   if (!(await pathExists(PATHS.definitionSchemasModels))) {
     throw new Error(
@@ -471,7 +325,7 @@ async function main() {
     );
   }
 
-  await ensureDirectory(PATHS.publishVersionSchemas);
+  await ensureDirectory(PATHS.publishedVersionSchemas);
 
   const allModelNames = await getDirectSubdirectoryNames(
     PATHS.definitionSchemasModels

@@ -1,5 +1,3 @@
-// scripts/build-asyncapis.mjs
-
 import { getRequestedArtifactName } from "./utils/build-utils.mjs";
 import { PATHS } from "./utils/project-paths.mjs";
 import {
@@ -13,7 +11,7 @@ const requestedApiName = getRequestedArtifactName();
 await buildApis({
   kind: "AsyncAPI",
   sourceDirectory: PATHS.definitionAsyncApis,
-  outputDirectory: PATHS.currentAsyncApis,
+  outputDirectory: PATHS.publishedCurrentAsyncApis,
   rootExtension: "asyncapi.yaml",
   bundledExtension: "asyncapi.yaml",
   bundle: bundleAsyncApi,
