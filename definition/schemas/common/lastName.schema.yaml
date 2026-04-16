@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: lastName
-description: '[AI-written] Person last name.'
+description: 'Person last name.'
 type: string
 examples:
 - Doe

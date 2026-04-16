@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: siretNumber
-description: '[AI-written] French SIRET number.'
+description: 'Company French SIRET number.'
 type: string
 pattern: ^\d{14}$
 examples:

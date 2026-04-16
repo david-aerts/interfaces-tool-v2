@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: adminSplitAmount
-description: '[AI-written] admin split amounts.'
+description: 'Admin cost split amounts.'
 type: object
 additionalProperties: false
 required:

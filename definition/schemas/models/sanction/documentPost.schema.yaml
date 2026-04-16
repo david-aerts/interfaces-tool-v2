@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: documentPost
-description: '[AI-written] Post service metadata.'
+description: 'Post service metadata.'
 type: object
 additionalProperties: false
 required:

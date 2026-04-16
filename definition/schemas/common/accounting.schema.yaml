@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: accounting
-description: '[AI-written] Accounting data.'
+description: 'Accounting transaction information from Accounting Module'
 type: object
 additionalProperties: false
 required:

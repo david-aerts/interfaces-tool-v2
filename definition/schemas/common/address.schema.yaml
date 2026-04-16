@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: address
-description: '[AI-written] Vehicle owner postal address.'
+description: 'Postal address.'
 type: object
 additionalProperties: false
 required:

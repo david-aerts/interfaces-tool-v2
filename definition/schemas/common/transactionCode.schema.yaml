@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: transactionCode
-description: '[AI-written] Accounting transaction code.'
+description: 'Accounting module transaction code.'
 type: string
 enum:
 - REGISTER_SANCTION
