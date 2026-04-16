@@ -22,6 +22,6 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../../../../publication/schemas/enforcementRecord/enforcementRecord.schema.json
+                $ref: ../../../../publication/schemas/enforcementRecord/enforcementRecord.schema.yaml
         '404':
           description: No enforcement record found for the given passageId.
