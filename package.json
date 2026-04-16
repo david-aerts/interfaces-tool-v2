@@ -1,0 +1,25 @@
+{
+  "name": "interfaces-tool-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:schemas": "node scripts/build-schemas.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/david-aerts/interfaces-tool-v2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/david-aerts/interfaces-tool-v2/issues"
+  },
+  "homepage": "https://github.com/david-aerts/interfaces-tool-v2#readme",
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^15.3.5",
+    "yaml": "^2.8.3"
+  }
+}
