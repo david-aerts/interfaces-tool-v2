@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "build:schemas": "node scripts/build-schemas.mjs",
-    "build:openapis": "node scripts/build-openapis.mjs"
+    "build:openapis": "node scripts/build-openapis.mjs",
+    "build:asyncapis": "node scripts/build-asyncapis.mjs"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.1.2",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
+    "@asyncapi/cli": "^6.0.0",
     "@redocly/cli": "^2.28.0"
   }
 }
