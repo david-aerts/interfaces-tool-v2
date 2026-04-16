@@ -6,7 +6,8 @@
   "scripts": {
     "build:schemas": "node scripts/build-schemas.mjs",
     "build:openapis": "node scripts/build-openapis.mjs",
-    "build:asyncapis": "node scripts/build-asyncapis.mjs"
+    "build:asyncapis": "node scripts/build-asyncapis.mjs",
+    "build": "node scripts/build-all.mjs"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.1.2",
