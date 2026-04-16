@@ -31,6 +31,8 @@ async function runNpx(commandArguments) {
 /**
  * Generic API build pipeline reused for both OpenAPI and AsyncAPI.
  *
+ * When requestedApiName is provided, only that API is built.
+ *
  * @param {object} configuration
  * @param {string} configuration.kind
  * @param {string} configuration.sourceDirectory
@@ -39,6 +41,7 @@ async function runNpx(commandArguments) {
  * @param {string} configuration.bundledExtension
  * @param {(rootFilePath: string, outputFilePath: string) => Promise<void>} configuration.bundle
  * @param {(bundledFilePath: string, outputDirectory: string, apiName: string) => Promise<void>} configuration.generateHtml
+ * @param {string | null} [configuration.requestedApiName]
  * @returns {Promise<void>}
  */
 export async function buildApis(configuration) {
@@ -50,6 +53,7 @@ export async function buildApis(configuration) {
     bundledExtension,
     bundle,
     generateHtml,
+    requestedApiName = null,
   } = configuration;
 
   if (!(await pathExists(sourceDirectory))) {
@@ -58,7 +62,17 @@ export async function buildApis(configuration) {
 
   await ensureDirectory(outputDirectory);
 
-  const apiNames = await getDirectSubdirectoryNames(sourceDirectory);
+  const allApiNames = await getDirectSubdirectoryNames(sourceDirectory);
+
+  const apiNames = requestedApiName
+    ? allApiNames.filter((apiName) => apiName === requestedApiName)
+    : allApiNames;
+
+  if (requestedApiName && apiNames.length === 0) {
+    throw new Error(
+      `${kind} "${requestedApiName}" not found in ${sourceDirectory}`
+    );
+  }
 
   if (apiNames.length === 0) {
     console.log(`No ${kind} folders found.`);
@@ -185,6 +199,7 @@ export async function generateAsyncApiHtml(
     "@asyncapi/html-template",
     "-o",
     outputDirectory,
+    "--force-write",
     "-p",
     "singleFile=true",
     "-p",

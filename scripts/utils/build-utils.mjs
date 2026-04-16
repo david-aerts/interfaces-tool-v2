@@ -42,3 +42,16 @@ export async function getDirectSubdirectoryNames(directoryPath) {
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
 }
+
+/**
+ * Returns the optional artifact name passed on the command line.
+ *
+ * Examples:
+ * - node scripts/build-schemas.mjs
+ * - node scripts/build-schemas.mjs enforcementRecord
+ *
+ * @returns {string | null}
+ */
+export function getRequestedArtifactName() {
+  return process.argv[2] ?? null;
+}

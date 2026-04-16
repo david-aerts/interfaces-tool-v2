@@ -6,7 +6,7 @@ import { promisify } from "node:util";
 const execFileAsync = promisify(execFile);
 
 /**
- * Runs a build script from package.json.
+ * Runs one npm script.
  *
  * @param {string} scriptName
  * @returns {Promise<void>}
@@ -21,10 +21,16 @@ async function runScript(scriptName) {
   });
 }
 
+/**
+ * Builds all artifacts in the expected order:
+ * 1. schemas
+ * 2. openapis
+ * 3. asyncapis
+ */
 async function main() {
-  await runScript("build:schemas");
-  await runScript("build:openapis");
-  await runScript("build:asyncapis");
+  await runScript("schemas");
+  await runScript("openapis");
+  await runScript("asyncapis");
 
   console.log("\nAll artifacts successfully generated.\n");
 }

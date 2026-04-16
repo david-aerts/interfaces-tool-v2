@@ -13,14 +13,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../../../../publication/schemas/filterRequest/filterRequest.schema.yaml
+              $ref: ../../../../published-current/schemas/filterRequest/filterRequest.schema.yaml
       responses:
         '200':
           description: Paginated enforcement records found.
           content:
             application/json:
               schema:
-                $ref: ../../../../publication/schemas/enforcementRecordPaginated/enforcementRecordPaginated.schema.yaml
+                $ref: ../../../../published-current/schemas/enforcementRecordPaginated/enforcementRecordPaginated.schema.yaml
   /enforcement-record/{passageId}:
     get:
       summary: Get enforcement record details by passageId
@@ -39,7 +39,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../../../../publication/schemas/enforcementRecord/enforcementRecord.schema.yaml
+                $ref: ../../../../published-current/schemas/enforcementRecord/enforcementRecord.schema.yaml
         '404':
           description: No enforcement record found for the given passageId.
   /breaches/filtered:
@@ -51,14 +51,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../../../../publication/schemas/filterRequest/filterRequest.schema.yaml
+              $ref: ../../../../published-current/schemas/filterRequest/filterRequest.schema.yaml
       responses:
         '200':
           description: Paginated breaches found.
           content:
             application/json:
               schema:
-                $ref: ../../../../publication/schemas/breachPaginated/breachPaginated.schema.yaml
+                $ref: ../../../../published-current/schemas/breachPaginated/breachPaginated.schema.yaml
   /breach/{_id}:
     get:
       summary: Get breach details by id
@@ -77,7 +77,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../../../../publication/schemas/breach/breach.schema.yaml
+                $ref: ../../../../published-current/schemas/breach/breach.schema.yaml
         '404':
           description: No breach found for the given id.
   /sanctions/filtered:
@@ -89,14 +89,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../../../../publication/schemas/filterRequest/filterRequest.schema.yaml
+              $ref: ../../../../published-current/schemas/filterRequest/filterRequest.schema.yaml
       responses:
         '200':
           description: Paginated sanctions found.
           content:
             application/json:
               schema:
-                $ref: ../../../../publication/schemas/sanctionPaginated/sanctionPaginated.schema.yaml
+                $ref: ../../../../published-current/schemas/sanctionPaginated/sanctionPaginated.schema.yaml
   /sanction/{_id}:
     get:
       summary: Get sanction details by id
@@ -115,6 +115,6 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../../../../publication/schemas/sanction/sanction.schema.yaml
+                $ref: ../../../../published-current/schemas/sanction/sanction.schema.yaml
         '404':
           description: No sanction found for the given id.

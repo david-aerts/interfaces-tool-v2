@@ -1,30 +1,22 @@
 // scripts/build-asyncapis.mjs
 
-import path from "node:path";
+import { getRequestedArtifactName } from "./utils/build-utils.mjs";
+import { PATHS } from "./utils/project-paths.mjs";
 import {
   buildApis,
   bundleAsyncApi,
   generateAsyncApiHtml,
 } from "./utils/build-api-docs.mjs";
 
-const PROJECT_ROOT = process.cwd();
+const requestedApiName = getRequestedArtifactName();
 
 await buildApis({
   kind: "AsyncAPI",
-  sourceDirectory: path.join(
-    PROJECT_ROOT,
-    "definition",
-    "apis",
-    "asyncApis"
-  ),
-  outputDirectory: path.join(
-    PROJECT_ROOT,
-    "publication",
-    "apis",
-    "asyncApis"
-  ),
+  sourceDirectory: PATHS.definitionAsyncApis,
+  outputDirectory: PATHS.currentAsyncApis,
   rootExtension: "asyncapi.yaml",
   bundledExtension: "asyncapi.yaml",
   bundle: bundleAsyncApi,
   generateHtml: generateAsyncApiHtml,
+  requestedApiName,
 });

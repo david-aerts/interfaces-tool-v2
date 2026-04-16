@@ -1,30 +1,22 @@
 // scripts/build-openapis.mjs
 
-import path from "node:path";
+import { getRequestedArtifactName } from "./utils/build-utils.mjs";
+import { PATHS } from "./utils/project-paths.mjs";
 import {
   buildApis,
   bundleOpenApi,
   generateOpenApiHtml,
 } from "./utils/build-api-docs.mjs";
 
-const PROJECT_ROOT = process.cwd();
+const requestedApiName = getRequestedArtifactName();
 
 await buildApis({
   kind: "OpenAPI",
-  sourceDirectory: path.join(
-    PROJECT_ROOT,
-    "definition",
-    "apis",
-    "openApis"
-  ),
-  outputDirectory: path.join(
-    PROJECT_ROOT,
-    "publication",
-    "apis",
-    "openApis"
-  ),
+  sourceDirectory: PATHS.definitionOpenApis,
+  outputDirectory: PATHS.currentOpenApis,
   rootExtension: "openapi.yaml",
   bundledExtension: "openapi.yaml",
   bundle: bundleOpenApi,
   generateHtml: generateOpenApiHtml,
+  requestedApiName,
 });

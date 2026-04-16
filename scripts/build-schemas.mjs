@@ -1,50 +1,39 @@
+// scripts/build-schemas.mjs
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import $RefParser from "@apidevtools/json-schema-ref-parser";
 import yaml from "js-yaml";
+import {
+  ensureDirectory,
+  getDirectSubdirectoryNames,
+  getRequestedArtifactName,
+  pathExists,
+} from "./utils/build-utils.mjs";
+import { PATHS } from "./utils/project-paths.mjs";
 
-const PROJECT_ROOT = process.cwd();
-
-const MODELS_DIR = path.join(
-  PROJECT_ROOT,
-  "definition",
-  "schemas",
-  "models"
-);
-
-const PUBLICATION_DIR = path.join(
-  PROJECT_ROOT,
-  "publication",
-  "schemas"
-);
-
-async function pathExists(targetPath) {
-  try {
-    await fs.access(targetPath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function getDirectSubdirectoryNames(directoryPath) {
-  const entries = await fs.readdir(directoryPath, { withFileTypes: true });
-
-  return entries
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name);
-}
-
-async function ensureDirectory(directoryPath) {
-  await fs.mkdir(directoryPath, { recursive: true });
-}
-
+/**
+ * Bundles one root schema into a single schema document.
+ *
+ * External file references are resolved during bundling.
+ * Internal references may remain in the generated output.
+ *
+ * @param {string} rootSchemaPath
+ * @returns {Promise<object>}
+ */
 async function bundleSchema(rootSchemaPath) {
   return $RefParser.bundle(rootSchemaPath);
 }
 
+/**
+ * Writes one bundled schema in both JSON and YAML formats.
+ *
+ * @param {object} schemaObject
+ * @param {string} modelName
+ * @returns {Promise<void>}
+ */
 async function writeSchemaOutputs(schemaObject, modelName) {
-  const outputDir = path.join(PUBLICATION_DIR, modelName);
+  const outputDir = path.join(PATHS.currentSchemas, modelName);
   await ensureDirectory(outputDir);
 
   const jsonOutputPath = path.join(outputDir, `${modelName}.schema.json`);
@@ -53,41 +42,74 @@ async function writeSchemaOutputs(schemaObject, modelName) {
   const jsonContent = JSON.stringify(schemaObject, null, 2) + "\n";
   const yamlContent = yaml.dump(schemaObject, {
     noRefs: true,
-    lineWidth: -1
+    lineWidth: -1,
   });
 
   await fs.writeFile(jsonOutputPath, jsonContent, "utf8");
   await fs.writeFile(yamlOutputPath, yamlContent, "utf8");
 }
 
+/**
+ * Builds one schema model from its root schema file.
+ *
+ * @param {string} modelName
+ * @returns {Promise<void>}
+ */
 async function buildOneModel(modelName) {
   const rootSchemaPath = path.join(
-    MODELS_DIR,
+    PATHS.definitionSchemasModels,
     modelName,
     `${modelName}.schema.yaml`
   );
 
   if (!(await pathExists(rootSchemaPath))) {
-    console.warn(`Skipping "${modelName}": missing root file ${rootSchemaPath}`);
+    console.warn(
+      `Skipping "${modelName}": missing root file ${rootSchemaPath}`
+    );
     return;
   }
 
-  console.log(`Building "${modelName}" from ${rootSchemaPath}`);
+  console.log(`Building schema "${modelName}"`);
 
   const bundledSchema = await bundleSchema(rootSchemaPath);
   await writeSchemaOutputs(bundledSchema, modelName);
 
-  console.log(`Done "${modelName}"`);
+  console.log(`Created: ${path.join(PATHS.currentSchemas, modelName)}`);
 }
 
+/**
+ * Main entry point.
+ *
+ * Optional usage:
+ * - node scripts/build-schemas.mjs
+ * - node scripts/build-schemas.mjs enforcementRecord
+ *
+ * @returns {Promise<void>}
+ */
 async function main() {
-  if (!(await pathExists(MODELS_DIR))) {
-    throw new Error(`Models directory not found: ${MODELS_DIR}`);
+  const requestedModelName = getRequestedArtifactName();
+
+  if (!(await pathExists(PATHS.definitionSchemasModels))) {
+    throw new Error(
+      `Models directory not found: ${PATHS.definitionSchemasModels}`
+    );
   }
 
-  await ensureDirectory(PUBLICATION_DIR);
+  await ensureDirectory(PATHS.currentSchemas);
 
-  const modelNames = await getDirectSubdirectoryNames(MODELS_DIR);
+  const allModelNames = await getDirectSubdirectoryNames(
+    PATHS.definitionSchemasModels
+  );
+
+  const modelNames = requestedModelName
+    ? allModelNames.filter((modelName) => modelName === requestedModelName)
+    : allModelNames;
+
+  if (requestedModelName && modelNames.length === 0) {
+    throw new Error(
+      `Schema "${requestedModelName}" not found in ${PATHS.definitionSchemasModels}`
+    );
+  }
 
   if (modelNames.length === 0) {
     console.log("No model folders found.");
@@ -98,7 +120,7 @@ async function main() {
     try {
       await buildOneModel(modelName);
     } catch (error) {
-      console.error(`Failed for "${modelName}": ${error.message}`);
+      console.error(`Failed schema "${modelName}": ${error.message}`);
       process.exitCode = 1;
     }
   }

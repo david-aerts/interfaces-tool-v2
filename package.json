@@ -4,10 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:schemas": "node scripts/build-schemas.mjs",
-    "build:openapis": "node scripts/build-openapis.mjs",
-    "build:asyncapis": "node scripts/build-asyncapis.mjs",
-    "build": "node scripts/build-all.mjs"
+    "schemas": "node scripts/build-schemas.mjs",
+    "publish:schemas": "node scripts/publish-schemas.mjs",
+    "openapis": "node scripts/build-openapis.mjs",
+    "asyncapis": "node scripts/build-asyncapis.mjs",
+    "all": "node scripts/build-all.mjs",
+    "help": "node scripts/help.mjs"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.1.2",

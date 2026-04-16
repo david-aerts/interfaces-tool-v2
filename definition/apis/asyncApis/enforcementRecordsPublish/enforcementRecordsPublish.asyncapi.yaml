@@ -20,7 +20,7 @@ channels:
         summary: Carries the full enforcement record envelope with meta and payload.
         contentType: application/json
         payload:
-          $ref: ../../../../publication/schemas/enforcementRecord/enforcementRecord.schema.yaml
+          $ref: ../../../../published-current/schemas/enforcementRecord/enforcementRecord.schema.yaml
 
 operations:
   publishEnforcementRecord:

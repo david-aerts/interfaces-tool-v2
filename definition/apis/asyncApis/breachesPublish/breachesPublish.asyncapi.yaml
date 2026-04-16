@@ -20,7 +20,7 @@ channels:
         summary: Carries the full breach envelope with meta and payload.
         contentType: application/json
         payload:
-          $ref: ../../../../publication/schemas/breach/breach.schema.yaml
+          $ref: ../../../../published-current/schemas/breach/breach.schema.yaml
 
 operations:
   publishEnforcementRecord:
