@@ -1,0 +1,9 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-providerIdentifier
+title: providerIdentifier
+description: EETS Provider ID
+type: integer
+minimum: 0
+maximum: 16383
+examples:
+- 1000

@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-district
+title: district
+description: District
+type: string
+examples:
+- Strasbourg

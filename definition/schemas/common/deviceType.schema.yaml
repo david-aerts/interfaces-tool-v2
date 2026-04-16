@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-deviceType
+title: deviceType
+description: The type of device used for the control
+type: string
+examples:
+- re_model_type

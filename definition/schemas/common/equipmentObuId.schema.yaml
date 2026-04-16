@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-equipmentObuId
+title: equipmentObuId
+description: OBU ID
+type: string
+pattern: ^[0-9A-F]{8}$
+examples:
+- 1A2B3C4D

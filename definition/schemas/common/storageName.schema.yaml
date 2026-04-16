@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-storageName
+title: storageName
+description: Name of the storage defined on the File GW
+type: string
+examples:
+- my_file_gw_storage_reference

@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-registrationNumber
+title: registrationNumber
+description: '[AI-written] Company registration number.'
+type: string
+examples:
+- REG-123456

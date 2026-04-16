@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-vatNumber
+title: vatNumber
+description: '[AI-written] Company VAT number.'
+type: string
+examples:
+- BE0123456789

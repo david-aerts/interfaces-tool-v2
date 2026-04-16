@@ -1,0 +1,9 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-source
+title: source
+description: Unique name of the application which is creating the message.
+type: string
+enum:
+- ctrl
+examples:
+- ctrl

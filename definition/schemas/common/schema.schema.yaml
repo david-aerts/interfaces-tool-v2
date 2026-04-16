@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-schema
+title: schema
+description: JSON schema name and version of the message, following general versioning compatibility rules.
+type: string
+examples:
+- enforcementRecord_v1

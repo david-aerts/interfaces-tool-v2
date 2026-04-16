@@ -1,0 +1,12 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: models-sanction-statusFiscalPaymentValue
+title: statusFiscalPaymentValue
+description: Fiscal payment status value
+type: string
+enum:
+- NONE
+- PARTIALWITHOUTPAC
+- PARTIALWITHPAC
+- FULL
+examples:
+- NONE

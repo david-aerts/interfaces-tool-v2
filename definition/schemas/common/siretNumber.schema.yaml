@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-siretNumber
+title: siretNumber
+description: '[AI-written] French SIRET number.'
+type: string
+pattern: ^\d{14}$
+examples:
+- '12345678901234'

@@ -1,0 +1,9 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-manufacturerId
+title: manufacturerId
+description: Manufacturer ID
+type: integer
+minimum: 0
+maximum: 65535
+examples:
+- 10234

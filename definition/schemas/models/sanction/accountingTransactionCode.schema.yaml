@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: models-sanction-accountingTransactionCode
+title: accountingTransactionCode
+description: Accounting transaction code.
+type: string
+enum:
+- REGISTER_SANCTION
+- PAY_SANCTION
+- DISBURSE_SANCTION
+- REFUND_SANCTION
+- CANCEL_SANCTION
+examples:
+- REGISTER_SANCTION

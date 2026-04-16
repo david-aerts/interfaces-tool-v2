@@ -1,0 +1,10 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: models-filterRequest-sortDir
+title: sortDir
+description: 'Sorting direction: ascending or descending, only meaningful if sortBy is provided'
+type: string
+enum:
+- ASC
+- DESC
+examples:
+- DESC

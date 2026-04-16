@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-sourceLock
+title: sourceLock
+description: Unique name of the application which is creating the message.
+type: string
+examples:
+- persistor

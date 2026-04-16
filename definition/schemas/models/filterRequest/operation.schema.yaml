@@ -1,0 +1,16 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: models-filterRequest-operation
+title: operation
+description: The operation to perform (e.g., $eq, $gte, $lte, $in).
+type: string
+enum:
+- $eq
+- $ne
+- $gt
+- $gte
+- $lt
+- $lte
+- $in
+- $nin
+examples:
+- $eq

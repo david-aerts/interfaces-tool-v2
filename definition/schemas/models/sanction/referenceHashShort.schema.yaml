@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: models-sanction-referenceHashShort
+title: referenceHashShort
+description: The truncated hash of the source
+type: string
+examples:
+- 0YB4059M2Z

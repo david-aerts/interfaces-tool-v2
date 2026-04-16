@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-city
+title: city
+description: City
+type: string
+examples:
+- Strasbourg

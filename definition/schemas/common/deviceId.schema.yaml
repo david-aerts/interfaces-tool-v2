@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-deviceId
+title: deviceId
+description: The unique identifier of the device
+type: string
+examples:
+- GANTRY_0568

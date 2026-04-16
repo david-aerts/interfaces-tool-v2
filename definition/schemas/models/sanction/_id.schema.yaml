@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: models-sanction-_id
+title: _id
+description: Identifier of the sanction
+type: string
+format: uuid
+examples:
+- 550e8400-e29b-41d4-a716-446655440000

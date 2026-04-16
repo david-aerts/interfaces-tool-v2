@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: sanctioningMain
+  version: X.Y.Z
+  description: Sanctioning general purpose REST API
+paths:
+  /enforcement-record/{passageId}:
+    get:
+      summary: Get enforcement record details by passageId
+      operationId: getEnforcementRecordByPassageId
+      parameters:
+      - name: passageId
+        in: path
+        required: true
+        description: Passage identifier.
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Enforcement record details.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../../publication/schemas/enforcementRecord/enforcementRecord.schema.json
+        '404':
+          description: No enforcement record found for the given passageId.

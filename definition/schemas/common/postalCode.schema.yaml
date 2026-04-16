@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-postalCode
+title: postalCode
+description: Postal code of the Control Location
+type: string
+examples:
+- '67000'

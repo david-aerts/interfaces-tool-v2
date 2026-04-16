@@ -1,0 +1,9 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: common-host
+title: host
+description: The host
+type:
+- string
+- 'null'
+examples:
+- https://www.file-storage-host.com
