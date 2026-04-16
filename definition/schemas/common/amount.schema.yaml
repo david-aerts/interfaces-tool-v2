@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: amount
-description: 'Monetary amount with value and scale.''
+description: 'Monetary amount with value and scale.'
 type: object
 additionalProperties: false
 required:

@@ -39,6 +39,18 @@ export const PATHS = {
     "schemas"
   ),
 
+  publishedCurrentApis: path.join(
+    PROJECT_ROOT,
+    "published-current",
+    "apis"
+  ),
+
+  publishedVersionApis: path.join(
+    PROJECT_ROOT,
+    "published-version",
+    "apis"
+  ),
+
   publishedCurrentOpenApis: path.join(
     PROJECT_ROOT,
     "published-current",

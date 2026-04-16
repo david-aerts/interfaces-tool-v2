@@ -25,6 +25,10 @@ Build all current AsyncAPI definitions:
 Build one current AsyncAPI definition:
   npm run asyncapis -- enforcementRecordsPublish
 
+CREATE SUMMARY HTML
+-------------------
+
+  npm run summary:apis
 
 VERSIONED SCHEMA PUBLICATION
 ----------------------------
