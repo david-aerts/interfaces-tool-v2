@@ -1,4 +1,9 @@
 node_modules/
-publication/
+published-current/
+published-version/
 .DS_Store
 .env
+# Add these lines to .gitignore
+
+definition/apis/openApis/**/.*.publish-temp.*
+definition/apis/asyncApis/**/.*.publish-temp.*
