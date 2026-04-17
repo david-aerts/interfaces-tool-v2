@@ -15,6 +15,10 @@ import {
   getNextVersion,
   parsePublishArguments,
 } from "./utils/publish-version-utils.mjs";
+import {
+  generateSchemaReleaseNotes,
+  writeSchemaReleaseNotes,
+} from "./utils/release-notes/schema-release-notes.mjs";
 
 /**
  * Collects publication results for the final summary table.
@@ -56,6 +60,16 @@ function getRootSchemaPath(modelName) {
  */
 function getModelPublicationDirectory(modelName) {
   return path.join(PATHS.publishedVersionSchemas, modelName);
+}
+
+/**
+ * Returns the release notes directory for one schema model.
+ *
+ * @param {string} modelName
+ * @returns {string}
+ */
+function getReleaseNotesDirectory(modelName) {
+  return path.join(getModelPublicationDirectory(modelName), "release-notes");
 }
 
 /**
@@ -307,6 +321,27 @@ async function publishOneModel(modelName, bumpType) {
   );
 
   await writePublishedSchema(versionedSchema, modelName, nextVersion);
+
+  if (latestVersion) {
+    const previousYamlPath = getVersionedYamlOutputPath(modelName, latestVersion);
+    const nextYamlPath = getVersionedYamlOutputPath(modelName, nextVersion);
+
+    const releaseNotes = await generateSchemaReleaseNotes(
+      modelName,
+      latestVersion,
+      nextVersion,
+      previousYamlPath,
+      nextYamlPath
+    );
+
+    const releaseNotesBaseName = `${modelName}_v${latestVersion}_to_v${nextVersion}.release-notes`;
+
+    await writeSchemaReleaseNotes(
+      getReleaseNotesDirectory(modelName),
+      releaseNotesBaseName,
+      releaseNotes
+    );
+  }
 
   addPublicationResult(modelName, latestVersion, nextVersion);
 }

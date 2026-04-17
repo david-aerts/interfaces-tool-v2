@@ -12,6 +12,7 @@
     "publish:asyncapis": "node scripts/publish-asyncapis.mjs",
     "all": "node scripts/build-all.mjs",
     "summary": "node scripts/build-publish-summary.mjs",
+    "release:schemas": "node scripts/release-schemas.mjs",
     "help": "node scripts/help.mjs"
   },
   "dependencies": {

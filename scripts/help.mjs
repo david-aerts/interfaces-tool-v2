@@ -83,6 +83,13 @@ Publish one AsyncAPI definition with a MAJOR bump:
   npm run publish:asyncapis -- enforcementRecordsPublish major
 
 
+
+ON-DEMAND SCHEMA RELEASE NOTES
+-----------------------------
+
+Generate release notes between two published schema versions:
+  npm run release:schemas -- breach 1.0.0 1.1.0
+
 OUTPUT FOLDERS
 --------------
 
