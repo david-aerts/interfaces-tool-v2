@@ -7,12 +7,15 @@
     "schemas": "node scripts/build-schemas.mjs",
     "openapis": "node scripts/build-openapis.mjs",
     "asyncapis": "node scripts/build-asyncapis.mjs",
+    "all": "node scripts/build-all.mjs",
     "publish:schemas": "node scripts/publish-schemas.mjs",
     "publish:openapis": "node scripts/publish-openapis.mjs",
     "publish:asyncapis": "node scripts/publish-asyncapis.mjs",
-    "all": "node scripts/build-all.mjs",
+    "publish:all": "npm run publish:schemas && npm run publish:openapis && npm run publish:asyncapis",
+    "releasenote:schemas": "node scripts/release-schemas.mjs",
+    "releasenote:openapis": "node scripts/release-openapis.mjs",
+    "releasenote:asyncapis": "node scripts/release-asyncapis.mjs",
     "summary": "node scripts/build-publish-summary.mjs",
-    "release:schemas": "node scripts/release-schemas.mjs",
     "help": "node scripts/help.mjs"
   },
   "dependencies": {
