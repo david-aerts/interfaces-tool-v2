@@ -168,6 +168,10 @@ async function buildCurrentSchemaRows(rootDirectory, schemasDirectory) {
  * published-version/schemas/<schemaName>/<schemaName>_vX.Y.Z.schema.yaml
  * published-version/schemas/<schemaName>/<schemaName>_vX.Y.Z.schema.json
  *
+ * Release notes expected structure:
+ * published-version/schemas/<schemaName>/release-notes/
+ *   <schemaName>_v<previous>_to_v<current>.release-notes.html
+ *
  * @param {string} rootDirectory
  * @param {string} schemasDirectory
  * @returns {Promise<string[]>}
@@ -222,21 +226,58 @@ async function buildVersionedSchemaRows(rootDirectory, schemasDirectory) {
     return compareVersions(left.version, right.version);
   });
 
-  return items.map(
-    (item) => `
+  return items.map((item, index) => {
+    let releaseNotesCell = "-";
+
+    const previousItem =
+      index > 0 && items[index - 1].name === item.name
+        ? items[index - 1]
+        : null;
+
+    if (previousItem) {
+      const releaseNotesHtmlPath = path.join(
+        schemasDirectory,
+        item.name,
+        "release-notes",
+        `${item.name}_v${previousItem.version}_to_v${item.version}.release-notes.html`
+      );
+
+      releaseNotesCell = (async () => {
+        const exists = await pathExists(releaseNotesHtmlPath);
+
+        if (!exists) {
+          return "-";
+        }
+
+        return `<a href="${escapeHtml(
+          toRelativeLink(rootDirectory, releaseNotesHtmlPath)
+        )}">${escapeHtml(path.basename(releaseNotesHtmlPath))}</a>`;
+      })();
+    }
+
+    return { item, releaseNotesCell };
+  }).reduce(async (accPromise, currentPromise) => {
+    const acc = await accPromise;
+    const current = await currentPromise;
+    const releaseNotesCell = await current.releaseNotesCell;
+
+    acc.push(`
       <tr>
-        <td>${escapeHtml(item.name)}</td>
-        <td>${escapeHtml(item.version)}</td>
-        <td>${escapeHtml(item.createdDate)}</td>
+        <td>${escapeHtml(current.item.name)}</td>
+        <td>${escapeHtml(current.item.version)}</td>
+        <td>${escapeHtml(current.item.createdDate)}</td>
         <td>${
-          item.jsonExists
-            ? `<a href="${escapeHtml(toRelativeLink(rootDirectory, item.jsonPath))}">${escapeHtml(path.basename(item.jsonPath))}</a>`
+          current.item.jsonExists
+            ? `<a href="${escapeHtml(toRelativeLink(rootDirectory, current.item.jsonPath))}">${escapeHtml(path.basename(current.item.jsonPath))}</a>`
             : "-"
         }</td>
-        <td><a href="${escapeHtml(toRelativeLink(rootDirectory, item.yamlPath))}">${escapeHtml(path.basename(item.yamlPath))}</a></td>
+        <td><a href="${escapeHtml(toRelativeLink(rootDirectory, current.item.yamlPath))}">${escapeHtml(path.basename(current.item.yamlPath))}</a></td>
+        <td>${releaseNotesCell}</td>
       </tr>
-    `
-  );
+    `);
+
+    return acc;
+  }, Promise.resolve([]));
 }
 
 /**
@@ -389,29 +430,23 @@ async function buildVersionedApiRows(
  *
  * @param {string} title
  * @param {string[]} rows
- * @param {boolean} includeVersion
- * @param {string} file1Title
- * @param {string} file2Title
+ * @param {string[]} headers
  * @returns {string}
  */
-function buildTableSection(title, rows, includeVersion, file1Title, file2Title) {
+function buildTableSection(title, rows, headers) {
   return `
     <h2>${escapeHtml(title)}</h2>
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          ${includeVersion ? "<th>Version</th>" : ""}
-          <th>Created Date</th>
-          <th>${escapeHtml(file1Title)}</th>
-          <th>${escapeHtml(file2Title)}</th>
+          ${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}
         </tr>
       </thead>
       <tbody>
         ${
           rows.length > 0
             ? rows.join("\n")
-            : `<tr><td colspan="${includeVersion ? 5 : 4}">No files found.</td></tr>`
+            : `<tr><td colspan="${headers.length}">No files found.</td></tr>`
         }
       </tbody>
     </table>
@@ -507,9 +542,7 @@ async function buildPublishedCurrentSummary() {
       PATHS.publishedCurrentRoot,
       PATHS.publishedCurrentSchemas
     ),
-    false,
-    "Schema JSON",
-    "Schema YAML"
+    ["Schema Name", "Created Date", "Schema JSON", "Schema YAML"]
   );
 
   const openApisSection = buildTableSection(
@@ -520,9 +553,7 @@ async function buildPublishedCurrentSummary() {
       "openapi.yaml",
       "openapi.html"
     ),
-    false,
-    "OpenAPI YAML",
-    "OpenAPI HTML"
+    ["API Name", "Created Date", "OpenAPI YAML", "OpenAPI HTML"]
   );
 
   const asyncApisSection = buildTableSection(
@@ -533,9 +564,7 @@ async function buildPublishedCurrentSummary() {
       "asyncapi.yaml",
       "asyncapi.html"
     ),
-    false,
-    "AsyncAPI YAML",
-    "AsyncAPI HTML"
+    ["API Name", "Created Date", "AsyncAPI YAML", "AsyncAPI HTML"]
   );
 
   const outputPath = path.join(PATHS.publishedCurrentRoot, "index.html");
@@ -563,15 +592,22 @@ async function buildPublishedCurrentSummary() {
 async function buildPublishedVersionSummary() {
   await ensureDirectory(PATHS.publishedVersionRoot);
 
+  const versionedSchemaRows = await buildVersionedSchemaRows(
+    PATHS.publishedVersionRoot,
+    PATHS.publishedVersionSchemas
+  );
+
   const schemasSection = buildTableSection(
     "Schemas",
-    await buildVersionedSchemaRows(
-      PATHS.publishedVersionRoot,
-      PATHS.publishedVersionSchemas
-    ),
-    true,
-    "Schema JSON",
-    "Schema YAML"
+    versionedSchemaRows,
+    [
+      "Schema Name",
+      "Version",
+      "Created Date",
+      "Schema JSON",
+      "Schema YAML",
+      "Release Notes",
+    ]
   );
 
   const openApisSection = buildTableSection(
@@ -582,9 +618,7 @@ async function buildPublishedVersionSummary() {
       "openapi.yaml",
       "openapi.html"
     ),
-    true,
-    "OpenAPI YAML",
-    "OpenAPI HTML"
+    ["API Name", "Version", "Created Date", "OpenAPI YAML", "OpenAPI HTML"]
   );
 
   const asyncApisSection = buildTableSection(
@@ -595,9 +629,7 @@ async function buildPublishedVersionSummary() {
       "asyncapi.yaml",
       "asyncapi.html"
     ),
-    true,
-    "AsyncAPI YAML",
-    "AsyncAPI HTML"
+    ["API Name", "Version", "Created Date", "AsyncAPI YAML", "AsyncAPI HTML"]
   );
 
   const outputPath = path.join(PATHS.publishedVersionRoot, "index.html");
