@@ -1,3 +1,4 @@
+
 import {
   bundleOpenApi,
   generateOpenApiHtmlToFile,
@@ -6,6 +7,10 @@ import {
 import { PATHS } from "./utils/project-paths.mjs";
 import { parsePublishArguments } from "./utils/publish-version-utils.mjs";
 import { publishApis } from "./utils/publish-api-docs.mjs";
+import {
+  generateOpenApiReleaseNotes,
+  writeOpenApiReleaseNotes,
+} from "./utils/release-notes/openapi-release-notes.mjs";
 
 const { artifactName, bumpType } = parsePublishArguments();
 
@@ -19,6 +24,28 @@ await publishApis({
   htmlExtension: "openapi.html",
   bundle: bundleOpenApi,
   generateHtml: generateOpenApiHtmlToFile,
+  generateReleaseNotes: async ({
+    apiName,
+    previousVersion,
+    nextVersion,
+    previousYamlPath,
+    nextYamlPath,
+    releaseNotesDirectory,
+  }) => {
+    const releaseNotes = await generateOpenApiReleaseNotes(
+      apiName,
+      previousVersion,
+      nextVersion,
+      previousYamlPath,
+      nextYamlPath
+    );
+
+    await writeOpenApiReleaseNotes(
+      releaseNotesDirectory,
+      `${apiName}_v${previousVersion}_to_v${nextVersion}.release-notes`,
+      releaseNotes
+    );
+  },
   requestedApiName: artifactName,
   bumpType,
 });

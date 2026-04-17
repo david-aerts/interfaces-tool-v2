@@ -16,9 +16,6 @@ import {
 } from "./publish-version-utils.mjs";
 
 import { PATHS } from "./project-paths.mjs";
-import { writeApiReleaseNotes } from "./release-notes/api-release-notes-common.mjs";
-import { generateOpenApiReleaseNotes } from "./release-notes/openapi-release-notes.mjs";
-import { generateAsyncApiReleaseNotes } from "./release-notes/asyncapi-release-notes.mjs";
 
 /**
  * Returns a path with POSIX separators.
@@ -474,6 +471,7 @@ async function removeTemporaryFile(filePath) {
  * @param {string} configuration.htmlExtension
  * @param {(rootFilePath: string, outputFilePath: string) => Promise<void>} configuration.bundle
  * @param {(bundledFilePath: string, outputFilePathOrDirectory: string, maybeFileName?: string) => Promise<void>} configuration.generateHtml
+ * @param {(args: { apiName: string, previousVersion: string, nextVersion: string, previousYamlPath: string, nextYamlPath: string, releaseNotesDirectory: string }) => Promise<void>} [configuration.generateReleaseNotes]
  * @param {string | null} configuration.requestedApiName
  * @param {"major" | "minor" | "patch"} configuration.bumpType
  * @returns {Promise<void>}
@@ -489,6 +487,7 @@ export async function publishApis(configuration) {
     htmlExtension,
     bundle,
     generateHtml,
+    generateReleaseNotes,
     requestedApiName,
     bumpType,
   } = configuration;
@@ -624,34 +623,20 @@ export async function publishApis(configuration) {
         );
       }
 
-      if (latestPublishedVersion) {
+      if (latestPublishedVersion && typeof generateReleaseNotes === "function") {
         const previousYamlPath = path.join(
           apiOutputDirectory,
           `${apiName}_v${latestPublishedVersion}.${bundledExtension}`
         );
 
-        const releaseNotes =
-          type === "openapi"
-            ? await generateOpenApiReleaseNotes(
-                apiName,
-                latestPublishedVersion,
-                nextVersion,
-                previousYamlPath,
-                finalYamlPath
-              )
-            : await generateAsyncApiReleaseNotes(
-                apiName,
-                latestPublishedVersion,
-                nextVersion,
-                previousYamlPath,
-                finalYamlPath
-              );
-
-        await writeApiReleaseNotes(
-          path.join(apiOutputDirectory, "release-notes"),
-          `${apiName}_v${latestPublishedVersion}_to_v${nextVersion}.release-notes`,
-          releaseNotes
-        );
+        await generateReleaseNotes({
+          apiName,
+          previousVersion: latestPublishedVersion,
+          nextVersion,
+          previousYamlPath,
+          nextYamlPath: finalYamlPath,
+          releaseNotesDirectory: path.join(apiOutputDirectory, "release-notes"),
+        });
       }
 
       summaryRows.push({

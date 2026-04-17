@@ -1,47 +1,111 @@
 console.log(`
-npm run schemas
-npm run schemas -- <schemaName>
+interfaces-tool-v2 commands
 
-npm run openapis
-npm run openapis -- <apiName>
+DEV BUILD COMMANDS
+------------------
 
-npm run asyncapis
-npm run asyncapis -- <apiName>
+Build all current artifacts:
+  npm run all
 
-npm run all
+Build all current schemas:
+  npm run schemas
 
-npm run publish:schemas
-npm run publish:schemas -- <schemaName>
-npm run publish:schemas -- major
-npm run publish:schemas -- minor
-npm run publish:schemas -- patch
-npm run publish:schemas -- <schemaName> major
-npm run publish:schemas -- <schemaName> minor
-npm run publish:schemas -- <schemaName> patch
+Build one current schema:
+  npm run schemas -- breach
 
-npm run publish:openapis
-npm run publish:openapis -- <apiName>
-npm run publish:openapis -- major
-npm run publish:openapis -- minor
-npm run publish:openapis -- patch
-npm run publish:openapis -- <apiName> major
-npm run publish:openapis -- <apiName> minor
-npm run publish:openapis -- <apiName> patch
+Build all current OpenAPI definitions:
+  npm run openapis
 
-npm run publish:asyncapis
-npm run publish:asyncapis -- <apiName>
-npm run publish:asyncapis -- major
-npm run publish:asyncapis -- minor
-npm run publish:asyncapis -- patch
-npm run publish:asyncapis -- <apiName> major
-npm run publish:asyncapis -- <apiName> minor
-npm run publish:asyncapis -- <apiName> patch
+Build one current OpenAPI definition:
+  npm run openapis -- sanctioningMain
 
-npm run publish:all
+Build all current AsyncAPI definitions:
+  npm run asyncapis
 
-npm run releasenote:schemas -- <schemaName> <fromVersion> <toVersion>
-npm run releasenote:openapis -- <apiName> <fromVersion> <toVersion>
-npm run releasenote:asyncapis -- <apiName> <fromVersion> <toVersion>
+Build one current AsyncAPI definition:
+  npm run asyncapis -- enforcementRecordsPublish
 
-npm run summary
+CREATE SUMMARY HTML
+-------------------
+
+  npm run summary
+
+VERSIONED SCHEMA PUBLICATION
+----------------------------
+
+Publish all schemas using the default MINOR bump:
+  npm run publish:schemas
+
+Publish one schema using the default MINOR bump:
+  npm run publish:schemas -- breach
+
+Publish all schemas with a PATCH bump:
+  npm run publish:schemas -- patch
+
+Publish all schemas with a MAJOR bump:
+  npm run publish:schemas -- major
+
+Publish one schema with a PATCH bump:
+  npm run publish:schemas -- breach patch
+
+Publish one schema with a MINOR bump:
+  npm run publish:schemas -- breach minor
+
+Publish one schema with a MAJOR bump:
+  npm run publish:schemas -- breach major
+
+
+VERSIONED API PUBLICATION
+-------------------------
+
+Publish all OpenAPI definitions using the default MINOR bump:
+  npm run publish:openapis
+
+Publish one OpenAPI definition using the default MINOR bump:
+  npm run publish:openapis -- sanctioningMain
+
+Publish all OpenAPI definitions with a PATCH bump:
+  npm run publish:openapis -- patch
+
+Publish one OpenAPI definition with a MAJOR bump:
+  npm run publish:openapis -- sanctioningMain major
+
+Publish all AsyncAPI definitions using the default MINOR bump:
+  npm run publish:asyncapis
+
+Publish one AsyncAPI definition using the default MINOR bump:
+  npm run publish:asyncapis -- enforcementRecordsPublish
+
+Publish all AsyncAPI definitions with a PATCH bump:
+  npm run publish:asyncapis -- patch
+
+Publish one AsyncAPI definition with a MAJOR bump:
+  npm run publish:asyncapis -- enforcementRecordsPublish major
+
+
+
+ON-DEMAND SCHEMA RELEASE NOTES
+-----------------------------
+
+Generate release notes between two published schema versions:
+  npm run release:schemas -- breach 1.0.0 1.1.0
+
+OUTPUT FOLDERS
+--------------
+
+Latest published non-versioned artifacts:
+  published-current/
+
+Published versioned schemas and APIs:
+  published-version/
 `);
+
+
+API RELEASE NOTES
+-----------------
+
+Generate OpenAPI release notes between two published versions:
+  npm run releasenote:openapis -- sanctioningMain 1.0.0 1.1.0
+
+Generate AsyncAPI release notes between two published versions:
+  npm run releasenote:asyncapis -- breachesPublish 1.0.0 1.1.0
