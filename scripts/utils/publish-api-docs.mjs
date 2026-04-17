@@ -16,6 +16,9 @@ import {
 } from "./publish-version-utils.mjs";
 
 import { PATHS } from "./project-paths.mjs";
+import { writeApiReleaseNotes } from "./release-notes/api-release-notes-common.mjs";
+import { generateOpenApiReleaseNotes } from "./release-notes/openapi-release-notes.mjs";
+import { generateAsyncApiReleaseNotes } from "./release-notes/asyncapi-release-notes.mjs";
 
 /**
  * Returns a path with POSIX separators.
@@ -618,6 +621,36 @@ export async function publishApis(configuration) {
           finalYamlPath,
           apiOutputDirectory,
           `${apiName}_v${nextVersion}.${htmlExtension}`
+        );
+      }
+
+      if (latestPublishedVersion) {
+        const previousYamlPath = path.join(
+          apiOutputDirectory,
+          `${apiName}_v${latestPublishedVersion}.${bundledExtension}`
+        );
+
+        const releaseNotes =
+          type === "openapi"
+            ? await generateOpenApiReleaseNotes(
+                apiName,
+                latestPublishedVersion,
+                nextVersion,
+                previousYamlPath,
+                finalYamlPath
+              )
+            : await generateAsyncApiReleaseNotes(
+                apiName,
+                latestPublishedVersion,
+                nextVersion,
+                previousYamlPath,
+                finalYamlPath
+              );
+
+        await writeApiReleaseNotes(
+          path.join(apiOutputDirectory, "release-notes"),
+          `${apiName}_v${latestPublishedVersion}_to_v${nextVersion}.release-notes`,
+          releaseNotes
         );
       }
 

@@ -352,6 +352,7 @@ async function buildCurrentApiRows(
  * @param {string} htmlExtension
  * @returns {Promise<string[]>}
  */
+
 async function buildVersionedApiRows(
   rootDirectory,
   apisDirectory,
@@ -408,8 +409,33 @@ async function buildVersionedApiRows(
     return compareVersions(left.version, right.version);
   });
 
-  return items.map(
-    (item) => `
+  const rows = [];
+
+  for (let index = 0; index < items.length; index += 1) {
+    const item = items[index];
+    let releaseNotesCell = "-";
+
+    const previousItem =
+      index > 0 && items[index - 1].name === item.name
+        ? items[index - 1]
+        : null;
+
+    if (previousItem) {
+      const releaseNotesHtmlPath = path.join(
+        apisDirectory,
+        item.name,
+        "release-notes",
+        `${item.name}_v${previousItem.version}_to_v${item.version}.release-notes.html`
+      );
+
+      if (await pathExists(releaseNotesHtmlPath)) {
+        releaseNotesCell = `<a href="${escapeHtml(
+          toRelativeLink(rootDirectory, releaseNotesHtmlPath)
+        )}">${escapeHtml(path.basename(releaseNotesHtmlPath))}</a>`;
+      }
+    }
+
+    rows.push(`
       <tr>
         <td>${escapeHtml(item.name)}</td>
         <td>${escapeHtml(item.version)}</td>
@@ -420,9 +446,12 @@ async function buildVersionedApiRows(
             ? `<a href="${escapeHtml(toRelativeLink(rootDirectory, item.htmlPath))}">${escapeHtml(path.basename(item.htmlPath))}</a>`
             : "-"
         }</td>
+        <td>${releaseNotesCell}</td>
       </tr>
-    `
-  );
+    `);
+  }
+
+  return rows;
 }
 
 /**
@@ -618,7 +647,7 @@ async function buildPublishedVersionSummary() {
       "openapi.yaml",
       "openapi.html"
     ),
-    ["API Name", "Version", "Created Date", "OpenAPI YAML", "OpenAPI HTML"]
+    ["API Name", "Version", "Created Date", "OpenAPI YAML", "OpenAPI HTML", "Release Notes"]
   );
 
   const asyncApisSection = buildTableSection(
@@ -629,7 +658,7 @@ async function buildPublishedVersionSummary() {
       "asyncapi.yaml",
       "asyncapi.html"
     ),
-    ["API Name", "Version", "Created Date", "AsyncAPI YAML", "AsyncAPI HTML"]
+    ["API Name", "Version", "Created Date", "AsyncAPI YAML", "AsyncAPI HTML", "Release Notes"]
   );
 
   const outputPath = path.join(PATHS.publishedVersionRoot, "index.html");
