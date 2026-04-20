@@ -1,8 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: host
-description: The host
-type:
-- string
-- 'null'
-examples:
-- https://www.file-storage-host.com

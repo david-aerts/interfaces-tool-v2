@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: ownerId
-description: The lock owner UUID
-type: string
-format: uuid
-examples:
-- 0f9c2b7a-3f3b-4b1c-8c3d-8b1a2a5d2c11

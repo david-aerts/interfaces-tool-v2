@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: sourceId
-description: Single source trace identifier.
-type: string
-examples:
-- 03833b71-b328-4d96-932a-4dbd92487d43

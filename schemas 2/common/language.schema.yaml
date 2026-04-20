@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: language
-description: ISO 639-1 2-letter code
-type: string
-pattern: ^[a-z]{2}$
-examples:
-- fr

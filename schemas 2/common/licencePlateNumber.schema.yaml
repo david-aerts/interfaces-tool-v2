@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: licencePlateNumber
-description: Licence Plate Number
-type: string
-examples:
-- ABC - 123

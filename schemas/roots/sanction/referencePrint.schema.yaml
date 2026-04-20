@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: referencePrint
-description: Reference to be printed on documents (PDF, ticket, etc).
-type: string
-examples:
-- 26RPS-0YB4059M2Z-39

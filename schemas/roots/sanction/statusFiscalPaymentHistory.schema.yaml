@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: statusFiscalPaymentHistory
-description: Fiscal Payment status history.
-type: array
-items:
-  $ref: ./statusFiscalPaymentHistoryItem.schema.yaml

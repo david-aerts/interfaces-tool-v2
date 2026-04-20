@@ -1,8 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: paymentType
-description: Business object for which the payment obligation was raised.
-type: string
-enum:
-  - SANCTION
-examples:
-  - SANCTION

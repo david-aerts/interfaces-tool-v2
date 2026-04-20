@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: consequenceFiscalDocuments
-description: Fiscal consequence documents.
-type: array
-items:
-  $ref: ./consequenceFiscalDocument.schema.yaml

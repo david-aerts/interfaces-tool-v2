@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: siretNumber
-description: 'Company French SIRET number.'
-type: string
-pattern: ^\d{14}$
-examples:
-- '12345678901234'

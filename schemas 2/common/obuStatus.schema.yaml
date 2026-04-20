@@ -1,9 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: obuStatus
-description: OBU status
-type: string
-enum:
-- GO
-- NO-GO
-examples:
-- GO

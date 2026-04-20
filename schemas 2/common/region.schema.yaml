@@ -1,8 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: region
-description: The aws region
-type:
-- string
-- 'null'
-examples:
-- eu-central-1

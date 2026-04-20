@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: dsrcReadings
-description: List of DSRC readings done for obus detected in the vehicle
-type: array
-items:
-  $ref: ./dsrcReading.schema.yaml

@@ -1,9 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: paymentSignupSource
-description: Business domain that generated the payment transaction request
-type: string
-enum:
-- PORTAL
-- SANCTIONING
-examples:
-- SANCTIONING

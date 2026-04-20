@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: obuRightLpn
-description: OBU right LPN attribute
-type: boolean
-examples:
-- true

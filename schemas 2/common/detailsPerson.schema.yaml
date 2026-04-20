@@ -1,8 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: detailsPerson
-description: Company vehicle owner details.
-allOf:
-- $ref: ./details.schema.yaml
-- required:
-  - firstName
-  - lastName

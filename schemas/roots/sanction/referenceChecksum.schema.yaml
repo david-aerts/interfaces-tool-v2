@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: referenceChecksum
-description: Checksum for the portal to validate the reference
-type: integer
-examples:
-- 39

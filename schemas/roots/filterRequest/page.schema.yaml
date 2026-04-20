@@ -1,8 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: page
-description: Requested page
-type: integer
-minimum: 0
-default: 1
-examples:
-- 1

@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: paymentTxnReferenceId
-description: The transaction ID to be provided to the Payment Service Provider, used for reconciliation
-type: string
-pattern: ^(S|T)[A-Za-z0-9]+$
-examples:
-  - S1000000000000000000000000000641

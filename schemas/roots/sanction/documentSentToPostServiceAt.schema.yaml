@@ -1,5 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: documentSentToPostServiceAt
-description: Time when the document was sent to the post service.
-allOf:
-- $ref: ../../common/time.schema.yaml

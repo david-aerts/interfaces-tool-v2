@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: countryCode
-description: Country code in ISO 3166-1 alpha-2 format
-type: string
-pattern: ^[A-Z]{2}$
-examples:
-- FR

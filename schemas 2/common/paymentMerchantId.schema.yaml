@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: paymentMerchantId
-description: The merchant ID to be presented to the Payment Service provider for FUELCARD (AGES)
-type: string
-examples:
-  - abc123456

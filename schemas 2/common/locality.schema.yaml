@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: locality
-description: Name of the locality linked to the Postal Code.
-type: string
-examples:
-- Strasbourg

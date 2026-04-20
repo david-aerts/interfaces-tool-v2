@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: documentPostRequestId
-description: ' Post service request identifier.'
-type: string
-examples:
-- paragon-req-001

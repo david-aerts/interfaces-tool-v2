@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: enforcementBoolean
-description: Boolean representing the decision to enforce or not
-type: boolean
-examples:
-- true

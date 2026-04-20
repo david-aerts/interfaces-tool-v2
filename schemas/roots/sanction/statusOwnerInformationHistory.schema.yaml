@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: statusOwnerInformationHistory
-description: Owner information status history.
-type: array
-items:
-  $ref: ./statusOwnerInformationHistoryItem.schema.yaml

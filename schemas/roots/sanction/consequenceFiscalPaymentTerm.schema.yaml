@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: consequenceFiscalPaymentTerm
-description: Fiscal consequence payment term
-type: integer
-minimum: 1
-examples:
-- 30

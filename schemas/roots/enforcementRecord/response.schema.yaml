@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: response
-description: This should be the exact response data structure as received by the related interface.
-type: object
-properties: {}
-examples:
-- placeholder: <response_from_siv>

@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: vatNumber
-description: 'Company VAT number.'
-type: string
-examples:
-- BE0123456789

@@ -1,6 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: sections
-description: Sections on the ticket
-type: array
-items:
-  $ref: ./sectionsItem.schema.yaml

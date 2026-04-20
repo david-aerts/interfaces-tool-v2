@@ -1,7 +1,0 @@
-$schema: https://json-schema.org/draft/2020-12/schema
-title: kilometerPoint
-description: 'Offical kilometer point as provided by authorities of the Control Location. Ex: 80+120 means 120 meters after kilometer point 80'
-type: string
-pattern: ^\d+\+\d+$
-examples:
-- 80+120
