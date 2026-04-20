@@ -42,10 +42,6 @@ function compareObjects(previousNode: any, nextNode: any, currentPath: string, a
     const previousValue = previousNode[key];
     if (JSON.stringify(previousValue) === JSON.stringify(nextValue)) continue;
 
-    if (currentPath.includes(".paths") || currentPath.includes(".channels")) {
-      if ((key === "get" || key === "post" || key === "put" || key === "delete" || key === "patch" || key === "receive" || key === "send") && isObject(previousValue) && isObject(nextValue) ) pass
-    }
-
     if (typeof previousValue === "string" && typeof nextValue === "string" && key === "$ref") {
       const oldVersion = getRefVersion(previousValue);
       const newVersion = getRefVersion(nextValue);
