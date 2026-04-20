@@ -49,6 +49,7 @@ export async function publishSchemas(target: string | "all", bump: "major" | "mi
   await ensureDirectory(PATHS.publishedSchemas);
   const allNames = await getDirectSubdirectoryNames(PATHS.definitionSchemasRoots);
   const names = target === "all" ? allNames : allNames.filter((name) => name === target);
+  const reportRows: Array<{ Name: string; "Old Version": string; "New Version": string }> = [];
   if (target !== "all" && names.length === 0) throw new Error(`Schema "${target}" not found.`);
   for (const name of names) {
     const rootPath = path.join(PATHS.definitionSchemasRoots, name, `${name}.schema.yaml`);
@@ -58,6 +59,7 @@ export async function publishSchemas(target: string | "all", bump: "major" | "mi
       const previousYamlPath = path.join(PATHS.publishedSchemas, name, `${name}_v${latestVersion}.schema.yaml`);
       const previousSchema = await readYamlFile(previousYamlPath);
       if (toComparisonString(previousSchema) === toComparisonString(bundled)) {
+        reportRows.push({ Name: name, "Old Version": latestVersion, "New Version": latestVersion });
         continue;
       }
     }
@@ -72,6 +74,8 @@ export async function publishSchemas(target: string | "all", bump: "major" | "mi
       const releaseNotes = await generateSchemaReleaseNotes(name, latestVersion, nextVersion, previousYamlPath, path.join(outDir, `${name}_v${nextVersion}.schema.yaml`));
       await writeReleaseNotes(outDir, `${name}_v${nextVersion}.release-notes`, releaseNotes);
     }
+    reportRows.push({ Name: name, "Old Version": latestVersion ?? "-", "New Version": nextVersion });
   }
+  if (reportRows.length > 0) console.table(reportRows);
   await writePublishedSummary();
 }

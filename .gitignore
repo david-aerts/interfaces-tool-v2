@@ -1,6 +1,5 @@
 node_modules/
-published-current/
-published-version/
+build/
 .DS_Store
 .env
 # Add these lines to .gitignore

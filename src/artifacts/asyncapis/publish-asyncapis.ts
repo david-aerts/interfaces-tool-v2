@@ -40,6 +40,7 @@ export async function publishAsyncApis(target: string | "all", bump: "major" | "
   await ensureDirectory(PATHS.publishedAsyncApis);
   const allNames = await getDirectSubdirectoryNames(PATHS.definitionAsyncApis);
   const names = target === "all" ? allNames : allNames.filter((name) => name === target);
+  const reportRows: Array<{ Name: string; "Old Version": string; "New Version": string }> = [];
   if (target !== "all" && names.length === 0) throw new Error(`AsyncAPI "${target}" not found.`);
   for (const name of names) {
     const sourcePath = path.join(PATHS.definitionAsyncApis, name, `${name}.asyncapi.yaml`);
@@ -54,7 +55,10 @@ export async function publishAsyncApis(target: string | "all", bump: "major" | "
       if (latestVersion) {
         const latestYamlPath = path.join(outDir, `${name}_v${latestVersion}.asyncapi.yaml`);
         const latestPublished = await readYamlFile(latestYamlPath);
-        if (toComparisonString(latestPublished) === toComparisonString(bundled)) continue;
+        if (toComparisonString(latestPublished) === toComparisonString(bundled)) {
+          reportRows.push({ Name: name, "Old Version": latestVersion, "New Version": latestVersion });
+          continue;
+        }
       }
       const nextVersion = getNextVersion(latestVersion, bump);
       const versioned = setApiVersion(bundled, nextVersion);
@@ -66,10 +70,12 @@ export async function publishAsyncApis(target: string | "all", bump: "major" | "
         const releaseNotes = await generateAsyncApiReleaseNotes(name, latestVersion, nextVersion, previousYamlPath, finalYamlPath);
         await writeReleaseNotes(outDir, `${name}_v${nextVersion}.release-notes`, releaseNotes);
       }
+      reportRows.push({ Name: name, "Old Version": latestVersion ?? "-", "New Version": nextVersion });
     } finally {
       await removeFile(prepared);
       await removeFile(draftBundledPath);
     }
   }
+  if (reportRows.length > 0) console.table(reportRows);
   await writePublishedSummary();
 }
