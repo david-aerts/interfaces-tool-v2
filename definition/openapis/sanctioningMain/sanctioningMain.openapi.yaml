@@ -1,0 +1,120 @@
+openapi: 3.1.0
+info:
+  title: sanctioningMain
+  version: X.Y.Z
+  description: Sanctioning general purpose REST API
+paths:
+  /enforcement-records/filtered:
+    post:
+      summary: Get Enforcement Records with advanced sorting and filtering.
+      operationId: getEnforcementRecordsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../../../build/current/schemas/filterRequest/filterRequest.schema.yaml
+      responses:
+        '200':
+          description: Paginated enforcement records found.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../build/current/schemas/enforcementRecordPaginated/enforcementRecordPaginated.schema.yaml
+  /enforcement-record/{passageId}:
+    get:
+      summary: Get enforcement record details by passageId
+      operationId: getEnforcementRecordByPassageId
+      parameters:
+      - name: passageId
+        in: path
+        required: true
+        description: Passage identifier.
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Enforcement record details.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../build/current/schemas/enforcementRecord/enforcementRecord.schema.yaml
+        '404':
+          description: No enforcement record found for the given passageId.
+  /breaches/filtered:
+    post:
+      summary: Get Breches with advanced sorting and filtering.
+      operationId: getBreachesList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../../../build/current/schemas/filterRequest/filterRequest.schema.yaml
+      responses:
+        '200':
+          description: Paginated breaches found.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../build/current/schemas/breachPaginated/breachPaginated.schema.yaml
+  /breach/{_id}:
+    get:
+      summary: Get breach details by id
+      operationId: getBreachdById
+      parameters:
+      - name: _id
+        in: path
+        required: true
+        description: Breach identifier.
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Breach details.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../build/current/schemas/breach/breach.schema.yaml
+        '404':
+          description: No breach found for the given id.
+  /sanctions/filtered:
+    post:
+      summary: Get Sanctions with advanced sorting and filtering.
+      operationId: getSanctionsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../../../build/current/schemas/filterRequest/filterRequest.schema.yaml
+      responses:
+        '200':
+          description: Paginated sanctions found.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../build/current/schemas/sanctionPaginated/sanctionPaginated.schema.yaml
+  /sanction/{_id}:
+    get:
+      summary: Get sanction details by id
+      operationId: getSanctionById
+      parameters:
+      - name: _id
+        in: path
+        required: true
+        description: Sanction identifier
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Sanction details.
+          content:
+            application/json:
+              schema:
+                $ref: ../../../build/current/schemas/sanction/sanction.schema.yaml
+        '404':
+          description: No sanction found for the given id.

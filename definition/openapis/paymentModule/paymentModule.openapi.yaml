@@ -1,0 +1,53 @@
+openapi: 3.1.0
+info:
+  title: paymentModule
+  version: X.Y.Z
+  description: REST interface to interact with AAX for payments
+paths:
+  /api/payment/create:
+    post:
+      summary: Create payment
+      operationId: createPayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../../../build/current/schemas/createPaymentRequest/createPaymentRequest.schema.yaml
+      responses:
+        '200':
+          description: Payment successfully created
+          content:
+            application/json:
+              schema:
+                $ref: ../../../build/current/schemas/createPaymentResponse/createPaymentResponse.schema.yaml
+  /api/payment/update:
+    post:
+      summary: Update payment
+      operationId: updatePayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../../../build/current/schemas/updatePaymentRequest/updatePaymentRequest.schema.yaml
+      responses:
+        '200':
+          description: Payment successfully updated
+  /{Aaax-frontend-api-urlAX}/tolling/initiatePaymentTransaction:
+    post:
+      summary: Initiate payment transaction
+      operationId: initiatePaymentTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../../../build/current/schemas/initiatePaymentTransactionRequest/initiatePaymentTransactionRequest.schema.yaml
+      responses:
+        '200':
+          description: Initiate payment transaction successfull
+          content:
+            application/json:
+              schema:
+                $ref: ../../../build/current/schemas/initiatePaymentTransactionResponse/initiatePaymentTransactionResponse.schema.yaml

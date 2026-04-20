@@ -4,19 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "schemas": "node scripts/build-schemas.mjs",
-    "openapis": "node scripts/build-openapis.mjs",
-    "asyncapis": "node scripts/build-asyncapis.mjs",
-    "all": "node scripts/build-all.mjs",
-    "publish:schemas": "node scripts/publish-schemas.mjs",
-    "publish:openapis": "node scripts/publish-openapis.mjs",
-    "publish:asyncapis": "node scripts/publish-asyncapis.mjs",
-    "publish:all": "npm run publish:schemas && npm run publish:openapis && npm run publish:asyncapis",
-    "releasenote:schemas": "node scripts/release-schemas.mjs",
-    "releasenote:openapis": "node scripts/release-openapis.mjs",
-    "releasenote:asyncapis": "node scripts/release-asyncapis.mjs",
-    "summary": "node scripts/build-publish-summary.mjs",
-    "help": "node scripts/help.mjs"
+    "main": "tsx src/main.ts",
+    "help": "tsx src/help.ts"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^15.1.2",
@@ -24,6 +13,16 @@
   },
   "devDependencies": {
     "@asyncapi/cli": "^6.0.0",
-    "@redocly/cli": "^2.28.0"
+    "@redocly/cli": "^2.28.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.6.3",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.10.1",
+    "@asyncapi/html-template": "^3.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "engines": {
+    "node": ">=20 <23"
   }
 }

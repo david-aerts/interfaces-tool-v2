@@ -1,0 +1,31 @@
+asyncapi: 3.1.0
+info:
+  title: Publish breaches
+  version: X.Y.Z
+  description: Kafka topic for publishing breaches to Reporting Module
+
+servers:
+  production:
+    host: localhost:9092
+    protocol: kafka
+    description: Production Kafka
+
+channels:
+  breaches:
+    address: kafka-topic/breaches
+    messages:
+      breach:
+        name: breach
+        title: Breach envelope
+        summary: Carries the full breach envelope with meta and payload.
+        contentType: application/json
+        payload:
+          $ref: ../../../build/current/schemas/breach/breach.schema.yaml
+
+operations:
+  publishBreaches:
+    action: send
+    channel:
+      $ref: '#/channels/breaches'
+    messages:
+      - $ref: '#/channels/breaches/messages/breach'
