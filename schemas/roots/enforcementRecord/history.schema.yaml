@@ -1,0 +1,6 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: history
+description: Historical status entries, only required after status changed at least once
+type: array
+items:
+  $ref: ./statusHistory.schema.yaml

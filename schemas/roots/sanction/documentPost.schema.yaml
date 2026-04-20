@@ -1,0 +1,16 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: documentPost
+description: 'Post service metadata.'
+type: object
+additionalProperties: false
+required:
+- provider
+- sentToPostServiceAt
+- requestId
+properties:
+  provider:
+    $ref: ./documentPostProvider.schema.yaml
+  sentToPostServiceAt:
+    $ref: ./documentSentToPostServiceAt.schema.yaml
+  requestId:
+    $ref: ./documentPostRequestId.schema.yaml

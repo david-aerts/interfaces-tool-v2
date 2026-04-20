@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: radiusTolerance
+description: Exemption radius tolerance
+type: integer
+minimum: 1
+examples:
+- 1000

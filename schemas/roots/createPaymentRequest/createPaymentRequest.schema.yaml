@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: breach
-description: breach
+title: updatePaymentReqeuest
+description: Request to update a bill on the Payment Module
 type: object
 additionalProperties: false
 required:

@@ -1,0 +1,19 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: vehicleCharacteristics
+description: Vehicle characteristics
+type: object
+additionalProperties: false
+required:
+- real
+- declared
+- applied
+- worst
+properties:
+  real:
+    $ref: ./characteristics.schema.yaml
+  declared:
+    $ref: ./characteristics.schema.yaml
+  applied:
+    $ref: ./characteristics.schema.yaml
+  worst:
+    $ref: ./characteristics.schema.yaml

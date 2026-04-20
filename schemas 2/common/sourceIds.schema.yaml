@@ -1,0 +1,6 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sourceIds
+description: In case of aggregation it must contain the traceIds of all aggregated messages
+type: array
+items:
+  $ref: ./sourceId.schema.yaml

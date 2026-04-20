@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: breach
-description: breach
+title: initiatePaymentTransactionResponse
+description: Response on the request to create a new transaction on an existing payment on AAX
 type: object
 additionalProperties: false
 required:

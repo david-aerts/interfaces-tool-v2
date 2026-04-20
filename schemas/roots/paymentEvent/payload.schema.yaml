@@ -1,0 +1,30 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: payload
+description: The business payload
+type: object
+additionalProperties: false
+required:
+  - id
+  - paymentId
+  - updateType
+  - event
+  - occurredAt
+  - transactionId
+  - amount
+properties:
+  id:
+    $ref: ./id.schema.yaml
+  paymentId:
+    $ref: ../../common/paymentId.schema.yaml
+  updateType:
+    $ref: ../../common/paymentUpdateEventType.schema.yaml
+  paymentMode:
+    $ref: ../../common/paymentMode.schema.yaml
+  event:
+    $ref: ../../common/paymentEvent.schema.yaml
+  occurredAt:
+    $ref: ../../common/time.schema.yaml
+  transactionId:
+    $ref: ./transactionId.schema.yaml
+  amount:
+    $ref: ../../common/amountWithCurrency.schema.yaml

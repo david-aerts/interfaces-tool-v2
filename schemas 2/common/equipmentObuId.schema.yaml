@@ -1,9 +1,7 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: value
-description: Status value
+title: equipmentObuId
+description: OBU ID
 type: string
-enum:
-- PENDING
-- DONE
+pattern: ^[0-9A-F]{8}$
 examples:
-- DONE
+- 1A2B3C4D

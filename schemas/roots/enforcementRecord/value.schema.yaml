@@ -1,9 +1,11 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: value
-description: Status value
+description: Enforcement Record main status
 type: string
 enum:
 - PENDING
-- DONE
+- ACCEPTED
+- REJECTED
+- ERROR
 examples:
-- DONE
+- ACCEPTED

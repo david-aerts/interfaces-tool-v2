@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: latitude
+description: Latitude, with a minimum of 5 digits decimal degrees of precision
+type: number
+minimum: -90
+maximum: 90
+examples:
+- 48.56155

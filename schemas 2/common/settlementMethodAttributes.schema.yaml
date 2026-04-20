@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: settlementMethodAttributes
+description: Control outcome attributes
+oneOf:
+- $ref: ./ticketAttributes.schema.yaml
+- $ref: ./exemptionAttributes.schema.yaml
+- $ref: ./subscriptionAttributes.schema.yaml

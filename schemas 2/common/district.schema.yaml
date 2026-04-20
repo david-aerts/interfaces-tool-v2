@@ -1,9 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: value
-description: Status value
+title: district
+description: District
 type: string
-enum:
-- PENDING
-- DONE
 examples:
-- DONE
+- Strasbourg

@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: count
+description: Number of times the resource lock was acquired since object creation
+type: integer
+minimum: 0
+examples:
+- 0

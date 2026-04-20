@@ -1,9 +1,9 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: value
-description: Status value
+title: obuStatus
+description: OBU status
 type: string
 enum:
-- PENDING
-- DONE
+- GO
+- NO-GO
 examples:
-- DONE
+- GO

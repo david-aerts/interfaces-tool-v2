@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: payload
+description: The business payload
+type: object
+additionalProperties: false
+required:
+- paymentId
+- paymentReference
+properties:
+  paymentId:
+    $ref: ../../common/paymentId.schema.yaml
+  paymentReference:
+    $ref: ../../common/paymentReference.schema.yaml

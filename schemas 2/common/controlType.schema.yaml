@@ -1,9 +1,9 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: value
-description: Status value
+title: controlType
+description: The type of control
 type: string
 enum:
-- PENDING
-- DONE
+- MANUAL
+- AUTOMATIC
 examples:
-- DONE
+- MANUAL

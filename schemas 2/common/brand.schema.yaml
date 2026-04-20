@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: brand
+description: Vehicle brand
+type:
+- string
+- 'null'
+examples:
+- Volvo

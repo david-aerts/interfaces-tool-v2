@@ -1,0 +1,7 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: accountingTransactionId
+description: Accounting transaction identifier.
+type: integer
+format: int64
+examples:
+- 123456789

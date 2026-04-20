@@ -1,6 +1,6 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: breach
-description: breach
+title: enforcementRecord
+description: Full enforcement record enriched by Sanctioning during ingestion
 type: object
 additionalProperties: false
 required:

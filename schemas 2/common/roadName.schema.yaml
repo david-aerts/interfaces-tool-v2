@@ -1,0 +1,6 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: roadName
+description: The name of the road Road of the Control Location
+type: string
+examples:
+- A35

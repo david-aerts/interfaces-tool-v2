@@ -1,9 +1,9 @@
 $schema: https://json-schema.org/draft/2020-12/schema
-title: value
-description: Status value
+title: vehicleOwnerType
+description: Owner type.
 type: string
 enum:
-- PENDING
-- DONE
+- PERSON
+- COMPANY
 examples:
-- DONE
+- PERSON
