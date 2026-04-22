@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sanctionUpdateTypeSetVehicleOwner
+description: To request the Sanction to set a vehicle owner
+type: string
+enum:
+- SET_VEHICLE_OWNER
+examples:
+- SET_VEHICLE_OWNER

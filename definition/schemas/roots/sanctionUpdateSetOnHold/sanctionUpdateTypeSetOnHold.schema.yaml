@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sanctionUpdateTypeSetOnHold
+description: To request the Sanction to be set On Hold
+type: string
+enum:
+- SET_ON_HOLD
+examples:
+- SET_ON_HOLD

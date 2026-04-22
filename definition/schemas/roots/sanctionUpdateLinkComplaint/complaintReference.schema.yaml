@@ -1,0 +1,6 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: complaintReference
+description: The complaint unique reference (from AAX)
+type: string
+examples:
+- CMP-CMP-987654

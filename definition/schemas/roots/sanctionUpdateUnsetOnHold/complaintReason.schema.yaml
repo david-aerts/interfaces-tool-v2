@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: complaintReason
+description: The reason of the complaint
+type: string
+enum:
+- COMPLAINT
+examples:
+- COMPLAINT

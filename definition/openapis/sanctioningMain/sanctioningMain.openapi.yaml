@@ -118,3 +118,28 @@ paths:
                 $ref: ../../../build/current/schemas/sanction/sanction.schema.yaml
         '404':
           description: No sanction found for the given id.
+    put:
+      summary: Update a sanction
+      operationId: updateSanction
+      parameters:
+      - name: _id
+        in: path
+        required: true
+        description: Sanction identifier
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: ../../../build/current/schemas/sanctionUpdateLinkComplaint/sanctionUpdateLinkComplaint.schema.yaml
+              - $ref: ../../../build/current/schemas/sanctionUpdateSetOnHold/sanctionUpdateSetOnHold.schema.yaml
+              - $ref: ../../../build/current/schemas/sanctionUpdateUnsetOnHold/sanctionUpdateUnsetOnHold.schema.yaml
+              - $ref: ../../../build/current/schemas/sanctionUpdateSetVehicleOwner/sanctionUpdateSetVehicleOwner.schema.yaml
+              
+      responses:
+        '204':
+          description: Sanction updated

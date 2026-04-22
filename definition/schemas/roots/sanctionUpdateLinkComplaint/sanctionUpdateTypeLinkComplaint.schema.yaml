@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sanctionUpdateTypeLinkComplaint
+description: To request a complaint to be linked to the sanction
+type: string
+enum:
+- LINK_COMPLAINT
+examples:
+- LINK_COMPLAINT

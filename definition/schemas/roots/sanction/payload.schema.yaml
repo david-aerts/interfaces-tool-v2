@@ -64,7 +64,7 @@ properties:
   proposedVehicleOwners:
     $ref: ./proposedVehicleOwners.schema.yaml
   vehicleOwner:
-    $ref: ./vehicleOwner.schema.yaml
+    $ref: ../../common/vehicleOwner.schema.yaml
   breaches:
     $ref: ./breaches.schema.yaml
 allOf:

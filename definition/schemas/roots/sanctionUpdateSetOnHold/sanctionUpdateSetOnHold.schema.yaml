@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sanctionUpdateSetOnHold
+description: Request to set a Sanction On Hold
+type: object
+additionalProperties: false
+required:
+- updateType
+- updateDetails
+properties:
+  updateType:
+    $ref: ./sanctionUpdateTypeSetOnHold.schema.yaml
+  updateDetails:
+    $ref: ./sanctionUpdateDetailsSetOnHold.schema.yaml

@@ -12,11 +12,11 @@ properties:
   type:
     $ref: ./vehicleOwnerType.schema.yaml
   details:
-    $ref: ../../common/details.schema.yaml
+    $ref: ./details.schema.yaml
   contact:
-    $ref: ../../common/contact.schema.yaml
+    $ref: ./contact.schema.yaml
   address:
-    $ref: ../../common/address.schema.yaml
+    $ref: ./address.schema.yaml
 allOf:
 - if:
     properties:
@@ -27,7 +27,7 @@ allOf:
   then:
     properties:
       details:
-        $ref: ../../common/detailsPerson.schema.yaml
+        $ref: ./detailsPerson.schema.yaml
 - if:
     properties:
       type:
@@ -37,4 +37,4 @@ allOf:
   then:
     properties:
       details:
-        $ref: ../../common/detailsCompany.schema.yaml
+        $ref: ./detailsCompany.schema.yaml

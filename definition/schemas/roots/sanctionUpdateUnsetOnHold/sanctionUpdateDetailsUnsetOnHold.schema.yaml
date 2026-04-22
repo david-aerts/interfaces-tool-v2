@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sanctionUpdateDetailsUnsetOnhold
+description: The details necessary to link the sanction to the complaint
+type: object
+additionalProperties: false
+required:
+- reference
+- reason
+properties:
+  reference:
+    $ref: ./complaintReference.schema.yaml
+  reason:
+    $ref: ./complaintReason.schema.yaml

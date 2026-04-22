@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sanctionUpdateLinkComplaint
+description: Request to link a complaint to a Sanction
+type: object
+additionalProperties: false
+required:
+- updateType
+- updateDetails
+properties:
+  updateType:
+    $ref: ./sanctionUpdateTypeLinkComplaint.schema.yaml
+  updateDetails:
+    $ref: ./sanctionUpdateDetailsLinkComplaint.schema.yaml

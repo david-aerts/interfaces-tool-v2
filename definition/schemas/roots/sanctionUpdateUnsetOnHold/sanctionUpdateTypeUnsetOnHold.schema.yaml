@@ -1,0 +1,8 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sanctionUpdateTypeUnsetOnHold
+description: To request the Sanction to be unset from On Hold
+type: string
+enum:
+- UNSET_ON_HOLD
+examples:
+- UNSET_ON_HOLD

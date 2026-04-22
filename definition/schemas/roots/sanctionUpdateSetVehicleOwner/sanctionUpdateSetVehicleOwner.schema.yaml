@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: sanctionUpdateSetVehicleOwner
+description: Request to unset a Sanction from On Hold
+type: object
+additionalProperties: false
+required:
+- updateType
+- updateDetails
+properties:
+  updateType:
+    $ref: ./sanctionUpdateTypeSetVehicleOwner.schema.yaml
+  updateDetails:
+    $ref: ./sanctionUpdateDetailsSetVehicleOwner.schema.yaml
